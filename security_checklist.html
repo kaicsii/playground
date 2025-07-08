@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>資訊安全自我檢查表</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            overflow-x: hidden; /* Prevent horizontal scrollbar from confetti */
+        }
+        /* Custom styles for checked items */
+        .checklist-item input:checked + label {
+            text-decoration: line-through;
+            color: #9ca3af; /* gray-400 */
+        }
+        /* Custom styles for the details dropdown marker */
+        details > summary {
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+        details > summary::before {
+            content: '▸';
+            margin-right: 0.5rem;
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+        details[open] > summary::before {
+            transform: rotate(90deg);
+        }
+
+        /* --- Confetti Animation (Upgraded) --- */
+        #confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        .confetti {
+            position: absolute;
+            top: -50px; /* Start above the screen */
+            opacity: 1;
+            /* Use a single animation definition, customized by JS */
+            animation: fall-dynamic linear forwards;
+        }
+
+        /* A more dynamic keyframe with swaying motion */
+        @keyframes fall-dynamic {
+            0% {
+                transform: translateY(-50px) rotateZ(0deg) rotateY(0deg);
+                opacity: 1;
+            }
+            100% {
+                /* --sway-x and --sway-y will be set by JS */
+                transform: translateY(105vh) rotateZ(var(--rotate-z)) rotateY(var(--rotate-y)) translateX(var(--sway-x));
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+
+    <div class="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-6 md:p-8 z-10 relative">
+        
+        <!-- Header -->
+        <div class="text-center mb-6">
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-800">資訊安全自我檢查表</h1>
+            <p class="text-gray-500 mt-2">請逐項確認，確保您的辦公環境與設備符合資安規範。</p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="mb-6">
+            <div class="flex justify-between mb-1">
+                <span class="text-base font-medium text-blue-700">完成進度</span>
+                <span id="progress-text" class="text-sm font-medium text-blue-700">0%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full transition-all duration-500 ease-in-out" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- Checklist -->
+        <div id="checklist-container" class="space-y-4">
+            
+            <!-- Item 1 -->
+            <div class="checklist-item bg-gray-50 p-4 rounded-lg transition hover:bg-gray-100">
+                <div class="flex items-start">
+                    <input id="item1" type="checkbox" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 flex-shrink-0">
+                    <div class="ml-3 text-sm w-full">
+                        <label for="item1" class="font-medium text-gray-900 cursor-pointer">作業系統更新至最新</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="checklist-item bg-gray-50 p-4 rounded-lg transition hover:bg-gray-100">
+                <div class="flex items-start">
+                    <input id="item2" type="checkbox" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 flex-shrink-0">
+                    <div class="ml-3 text-sm w-full">
+                        <label for="item2" class="font-medium text-gray-900 cursor-pointer">Windows Defender 需啟用即時掃描</label>
+                        <details class="mt-2 text-gray-600">
+                            <summary class="cursor-pointer text-xs text-blue-600 hover:underline">顯示說明</summary>
+                            <p class="mt-1 pl-4 border-l-2 border-gray-200">開始→Windows安全性→病毒與威脅防護→病毒與威脅防護設定→即時保護 (設定開啟)</p>
+                        </details>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Item 3 -->
+            <div class="checklist-item bg-gray-50 p-4 rounded-lg transition hover:bg-gray-100">
+                <div class="flex items-start">
+                    <input id="item3" type="checkbox" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 flex-shrink-0">
+                    <div class="ml-3 text-sm w-full">
+                        <label for="item3" class="font-medium text-gray-900 cursor-pointer">安裝防毒軟體</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 4 -->
+            <div class="checklist-item bg-gray-50 p-4 rounded-lg transition hover:bg-gray-100">
+                <div class="flex items-start">
+                    <input id="item4" type="checkbox" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 flex-shrink-0">
+                    <div class="ml-3 text-sm w-full">
+                        <label for="item4" class="font-medium text-gray-900 cursor-pointer">掃毒更新至最新，掃描一次</label>
+                         <details class="mt-2 text-gray-600">
+                            <summary class="cursor-pointer text-xs text-blue-600 hover:underline">顯示說明</summary>
+                            <p class="mt-1 pl-4 border-l-2 border-gray-200">開始→Windows安全性→病毒與威脅防護→快速掃描</p>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 5 -->
+            <div class="checklist-item bg-gray-50 p-4 rounded-lg transition hover:bg-gray-100">
+                <div class="flex items-start">
+                    <input id="item5" type="checkbox" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 flex-shrink-0">
+                    <div class="ml-3 text-sm w-full">
+                        <label for="item5" class="font-medium text-gray-900 cursor-pointer">是否符合允許使用可用軟體</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 6 -->
+            <div class="checklist-item bg-gray-50 p-4 rounded-lg transition hover:bg-gray-100">
+                <div class="flex items-start">
+                    <input id="item6" type="checkbox" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 flex-shrink-0">
+                    <div class="ml-3 text-sm w-full">
+                        <label for="item6" class="font-medium text-gray-900 cursor-pointer">螢幕保護程式設定10分與密碼鎖定</label>
+                         <details class="mt-2 text-gray-600">
+                            <summary class="cursor-pointer text-xs text-blue-600 hover:underline">顯示說明</summary>
+                            <p class="mt-1 pl-4 border-l-2 border-gray-200">
+                                <strong>Windows:</strong> 桌面右鍵→個人化→鎖定畫面→螢幕保護程式設定。<br>
+                                <strong>Mac:</strong> 系統偏好設定→桌面與螢幕保護程式→螢幕保護程式→顯示螢幕保護程式前的閒置時間，並於「安全性與隱私權」設定「進入睡眠或開始螢幕保護程式立即喚醒電腦需要輸入密碼」。
+                            </p>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 7 -->
+            <div class="checklist-item bg-gray-50 p-4 rounded-lg transition hover:bg-gray-100">
+                <div class="flex items-start">
+                    <input id="item7" type="checkbox" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 flex-shrink-0">
+                    <div class="ml-3 text-sm w-full">
+                        <label for="item7" class="font-medium text-gray-900 cursor-pointer">辦公桌面整理，辦公環境不得出現帳號/密碼</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 8 -->
+            <div class="checklist-item bg-gray-50 p-4 rounded-lg transition hover:bg-gray-100">
+                <div class="flex items-start">
+                    <input id="item8" type="checkbox" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 flex-shrink-0">
+                    <div class="ml-3 text-sm w-full">
+                        <label for="item8" class="font-medium text-gray-900 cursor-pointer">電腦桌面整理，不得出現個資/機敏資料</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 9 -->
+            <div class="checklist-item bg-gray-50 p-4 rounded-lg transition hover:bg-gray-100">
+                <div class="flex items-start">
+                    <input id="item9" type="checkbox" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 flex-shrink-0">
+                    <div class="ml-3 text-sm w-full">
+                        <label for="item9" class="font-medium text-gray-900 cursor-pointer">電腦桌面整理，機敏資料需壓縮加密碼</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 10 -->
+            <div class="checklist-item bg-gray-50 p-4 rounded-lg transition hover:bg-gray-100">
+                <div class="flex items-start">
+                    <input id="item10" type="checkbox" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 flex-shrink-0">
+                    <div class="ml-3 text-sm w-full">
+                        <label for="item10" class="font-medium text-gray-900 cursor-pointer">個人辦公環境整潔</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 11 -->
+            <div class="checklist-item bg-gray-50 p-4 rounded-lg transition hover:bg-gray-100">
+                <div class="flex items-start">
+                    <input id="item11" type="checkbox" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 flex-shrink-0">
+                    <div class="ml-3 text-sm w-full">
+                        <label for="item11" class="font-medium text-gray-900 cursor-pointer">USB隨身碟收拾</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 12 -->
+            <div class="checklist-item bg-gray-50 p-4 rounded-lg transition hover:bg-gray-100">
+                <div class="flex items-start">
+                    <input id="item12" type="checkbox" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1 flex-shrink-0">
+                    <div class="ml-3 text-sm w-full">
+                        <label for="item12" class="font-medium text-gray-900 cursor-pointer">不能把手機插在電腦充電</label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Actions -->
+        <div class="mt-8 flex justify-end">
+            <button id="reset-button" class="bg-gray-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 transition duration-300">
+                重設
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Confetti Container -->
+    <div id="confetti-container"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkboxes = document.querySelectorAll('.checklist-item input[type="checkbox"]');
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            const resetButton = document.getElementById('reset-button');
+            const confettiContainer = document.getElementById('confetti-container');
+            const totalItems = checkboxes.length;
+
+            // --- Confetti Logic (Upgraded) ---
+            const confettiColors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4caf50', '#8bc34a', '#cddc39', '#ffeb3b', '#ffc107', '#ff9800', '#ff5722'];
+            let isCelebrating = false;
+
+            function startConfetti() {
+                if (isCelebrating) return;
+                isCelebrating = true;
+
+                // Create 200 pieces of confetti
+                for (let i = 0; i < 200; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    
+                    // Randomize shape (rectangle or circle)
+                    if (Math.random() > 0.4) {
+                        confetti.style.width = `${8 + Math.random() * 6}px`;
+                        confetti.style.height = `${15 + Math.random() * 8}px`;
+                    } else {
+                        const size = `${10 + Math.random() * 8}px`;
+                        confetti.style.width = size;
+                        confetti.style.height = size;
+                        confetti.style.borderRadius = '50%';
+                    }
+
+                    // Randomize starting position and color
+                    confetti.style.left = `${Math.random() * 100}vw`;
+                    confetti.style.backgroundColor = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+                    
+                    // Randomize animation properties using CSS variables
+                    confetti.style.setProperty('--sway-x', `${(Math.random() - 0.5) * 200}px`);
+                    confetti.style.setProperty('--rotate-z', `${(Math.random() - 0.5) * 720}deg`);
+                    confetti.style.setProperty('--rotate-y', `${(Math.random() - 0.5) * 720}deg`);
+                    
+                    // Set animation duration and delay
+                    const duration = 4 + Math.random() * 3;
+                    const delay = Math.random() * 2;
+                    confetti.style.animationDuration = `${duration}s`;
+                    confetti.style.animationDelay = `${delay}s`;
+
+                    confettiContainer.appendChild(confetti);
+                }
+
+                // Clean up confetti after animation ends
+                setTimeout(() => {
+                    confettiContainer.innerHTML = '';
+                    isCelebrating = false;
+                }, 7000); // Max duration + max delay
+            }
+
+            // Function to update the progress bar and text
+            function updateProgress() {
+                const checkedItems = document.querySelectorAll('.checklist-item input[type="checkbox"]:checked').length;
+                const percentage = totalItems > 0 ? Math.round((checkedItems / totalItems) * 100) : 0;
+                
+                progressBar.style.width = `${percentage}%`;
+                progressText.textContent = `${percentage}%`;
+
+                if (percentage === 100) {
+                    startConfetti();
+                }
+            }
+
+            // Add an event listener to each checkbox
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', updateProgress);
+            });
+
+            // Add event listener for the reset button
+            resetButton.addEventListener('click', () => {
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                updateProgress();
+            });
+
+            // Initial call to set the progress on page load
+            updateProgress();
+        });
+    </script>
+
+</body>
+</html>
