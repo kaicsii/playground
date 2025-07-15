@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aethelgard | 艾利亞斯旅遊指南</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body { background-color: #F9F9F9; font-family: 'Noto Sans TC', sans-serif; color: #3D3D3D; }
+        .font-fantasy { font-family: 'Cinzel', serif; }
+        .page { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .nav-item.active svg, .nav-item.active p { color: #6A67C1; }
+        .ai-input { border: 1px solid #EAEAEA; transition: border-color 0.3s; }
+        .ai-input:focus { outline: none; border-color: #C8C6ED; }
+        .info-tag { display: inline-flex; align-items: center; background-color: #F3F4F6; color: #4B5563; padding: 4px 12px; border-radius: 9999px; font-size: 0.875rem; line-height: 1.25rem; border: 1px solid #E5E7EB; }
+        .bookmark-btn.saved svg { fill: #6A67C1; color: #6A67C1; }
+        .draggable-item { cursor: grab; }
+        .draggable-item:active { cursor: grabbing; }
+        .drop-zone { min-height: 100px; transition: background-color 0.2s; }
+        .drop-zone.drag-over { background-color: #F3F4F6; border-style: dashed; }
+
+        /* --- Guild Card Styles --- */
+        .guild-card {
+            background-color: #FDFBF5;
+            background-image: url('https://www.transparenttextures.com/patterns/old-paper.png');
+            border: 3px solid #C1A98A;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        .guild-card-border {
+            position: relative;
+            padding: 1rem;
+            border: 1px solid #D9C6AD;
+        }
+        .guild-card-border::before, .guild-card-border::after,
+        .guild-card-inner-border::before, .guild-card-inner-border::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-color: #C1A98A;
+            border-style: solid;
+        }
+        .guild-card-border::before { top: -3px; left: -3px; border-width: 3px 0 0 3px; }
+        .guild-card-border::after { top: -3px; right: -3px; border-width: 3px 3px 0 0; }
+        .guild-card-inner-border::before { bottom: -3px; left: -3px; border-width: 0 0 3px 3px; }
+        .guild-card-inner-border::after { bottom: -3px; right: -3px; border-width: 0 3px 3px 0; }
+        .xp-bar-bg { background-color: #E0D6C7; }
+        .xp-bar-fill { background: linear-gradient(90deg, #FDD835, #FFB300); box-shadow: 0 0 10px #FFD700; }
+        .badge { background-color: #EFEAE2; border: 1px solid #D9C6AD; transition: all 0.3s ease; position: relative; }
+        .badge:hover { transform: scale(1.1) translateY(-2px); box-shadow: 0 0 15px rgba(255, 215, 0, 0.8); border-color: #FDD835; z-index: 10; }
+        @keyframes subtle-glow {
+            0%, 100% { text-shadow: 0 0 5px rgba(193, 169, 138, 0.5); }
+            50% { text-shadow: 0 0 10px rgba(193, 169, 138, 1); }
+        }
+        .guild-rank-glow { animation: subtle-glow 4s ease-in-out infinite; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div id="app-container" class="max-w-lg mx-auto bg-white min-h-screen shadow-lg pb-24">
+        <main id="main-content" class="p-5">
+            <div id="home-page" class="page active">
+                <header class="flex justify-between items-center my-6">
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-800">美好的一天</h1>
+                        <p class="mt-1 text-gray-500">歡迎來到 <span id="world-name-placeholder" class="font-semibold"></span></p>
+                    </div>
+                    <img id="homeUserAvatar" src="https://placehold.co/100x100/A98B71/FFFFFF?text=Kael" alt="[使用者頭像]" class="rounded-full w-10 h-10 object-cover">
+                </header>
+                <div class="grid grid-cols-3 gap-3 text-center mb-8">
+                    <div class="bg-green-50 rounded-2xl p-4 flex flex-col items-center justify-center aspect-square"><div class="bg-green-200 p-2 rounded-lg"><svg data-lucide="feather" class="w-6 h-6 text-green-800"></svg></div><p class="font-semibold text-green-900 mt-2 text-sm">尋找飛龍</p></div>
+                    <div class="bg-red-50 rounded-2xl p-4 flex flex-col items-center justify-center aspect-square"><div class="bg-red-200 p-2 rounded-lg"><svg data-lucide="home" class="w-6 h-6 text-red-800"></svg></div><p class="font-semibold text-red-900 mt-2 text-sm">預訂旅店</p></div>
+                    <div class="bg-blue-50 rounded-2xl p-4 flex flex-col items-center justify-center aspect-square"><div class="bg-blue-200 p-2 rounded-lg"><svg data-lucide="mountain" class="w-6 h-6 text-blue-800"></svg></div><p class="font-semibold text-blue-900 mt-2 text-sm">租賃坐騎</p></div>
+                </div>
+                <div class="relative mb-8">
+                    <svg data-lucide="search" class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></svg>
+                    <input type="text" placeholder="詢問任何事..." class="ai-input w-full pl-12 pr-4 py-3 bg-white rounded-full text-sm">
+                </div>
+                <div id="world-overview-container">
+                    <!-- 世界紀聞將會被注入到這裡 -->
+                </div>
+            </div>
+
+            <div id="explore-page" class="page">
+                 <header class="my-6">
+                    <h1 class="text-3xl font-bold text-gray-800">探索目的地</h1>
+                    <p class="mt-1 text-gray-500">發掘艾利亞斯大陸的奇觀</p>
+                </header>
+                <div id="location-grid" class="space-y-4"></div>
+            </div>
+
+            <div id="trips-page" class="page">
+                <!-- 這個頁面現在會動態顯示行程列表或行程規劃器 -->
+            </div>
+
+            <div id="profile-page" class="page">
+                <!-- 公會卡將會被注入到這裡 -->
+            </div>
+            
+            <div id="detail-page" class="page"></div>
+        </main>
+
+        <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 max-w-lg mx-auto bg-white/90 backdrop-blur-sm border-t border-gray-100"><div class="flex justify-around py-2"><button data-page="home-page" class="nav-item active flex flex-col items-center text-gray-400 hover:text-[#6A67C1] transition-colors w-1/4 pt-1"><svg class="w-6 h-6" data-lucide="home"></svg><p class="text-xs mt-1">首頁</p></button><button data-page="explore-page" class="nav-item flex flex-col items-center text-gray-400 hover:text-[#6A67C1] transition-colors w-1/4 pt-1"><svg class="w-6 h-6" data-lucide="compass"></svg><p class="text-xs mt-1">探索</p></button><button data-page="trips-page" class="nav-item flex flex-col items-center text-gray-400 hover:text-[#6A67C1] transition-colors w-1/4 pt-1"><svg class="w-6 h-6" data-lucide="book-marked"></svg><p class="text-xs mt-1">旅程</p></button><button data-page="profile-page" class="nav-item flex flex-col items-center text-gray-400 hover:text-[#6A67C1] transition-colors w-1/4 pt-1"><svg class="w-6 h-6" data-lucide="user"></svg><p class="text-xs mt-1">個人</p></button></div></nav>
+    </div>
+
+    <script>
+        // --- 資料合併 ---
+        const existingData = { "world_name": "艾利亞斯", "regions": [ { "id": "solaria", "name": "天空之城邦．索拉利亞", "description": "由數十座巨大的浮空島組成，島嶼之間以魔法光橋「虹之徑」和定期航行的「浮空船」相連。雲海如絮，陽光終年普照。", "climate": ["陽光普照", "雲海繚繞"], "transportation": ["浮空船", "虹之徑"], "cities": [ { "id": "aerion", "name": "艾里昂", "description": "索拉利亞的首都，也是最大的浮空船港口。以其輕盈、優雅的白色大理石建築與金色裝飾聞名。", "attractions": [ { "name": "永恆迴廊", "type": "古代遺跡", "description": "環繞城市核心的巨大白色石柱長廊，據說是古代文明的遺物。" }, { "name": "虹之徑", "type": "魔法橋梁", "description": "連接主要浮空島的魔法光橋，走在上面如同漫步在彩虹之上。" } ] } ], "festivals": [ { "name": "風神祭", "season": "夏初", "description": "居民會放飛成千上萬盞手繪的「祈願燈籠」，並舉行盛大的浮空船競速比賽。" } ], "foods": ["雲朵舒芙蕾", "星蜜酒"] }, { "id": "sylvanos", "name": "迷霧森林．希爾瓦諾斯", "description": "位於一塊相對完整的古大陸殘塊上，終年被溫潤的魔法迷霧籠罩。巨大的參天古木構成了天然的城市。", "climate": ["魔法迷霧", "溫潤"], "transportation": ["精靈迴廊", "林地駝獸"], "cities": [ { "id": "moonglade", "name": "月影鎮", "description": "隱藏在森林心臟地帶的精靈聚落，建築與巨樹融為一體，生活步調緩慢。", "attractions": [ { "name": "月光聖泉", "type": "聖地", "description": "據說擁有治癒的力量，泉水在滿月時會映照出世界的真實。" }, { "name": "精靈迴廊", "type": "活體橋梁", "description": "由植物魔法編織而成的活體藤橋，連接樹與樹之間。" } ] } ], "festivals": [], "foods": ["靈果甜餅", "月光漿果"] }, { "id": "ignis", "name": "火山商港．伊格尼斯", "description": "建立在一座巨大活火山的半山腰，城市向下延伸至地底深處。地熱能源被巧妙地運用在各種機械上。", "climate": ["熾熱", "蒸汽瀰漫"], "transportation": ["地脈熔岩鐵道", "飛龍快遞"], "cities": [ { "id": "blackiron", "name": "黑鐵城", "description": "伊格尼斯的核心。由勤勞的矮人與人類商人共同建立，以鍛造技術與煉金術聞名於世。", "attractions": [ { "name": "黑鐵市集", "type": "地下市集", "description": "一個巨大的地下洞穴，可以找到來自世界各地的奇珍異寶與附魔武器。" }, { "name": "地脈熔岩鐵道", "type": "特殊交通", "description": "利用地熱驅動的地下鐵路，連接火山內外的各個區域，是獨一無二的體驗。" } ] } ], "festivals": [], "foods": ["熔岩烤肉串", "矮人黑麥酒"] } ] };
+        const newData = { "world_name": "艾利亞斯", "regions": [ { "id": "astoria_highlands", "name": "星紋高地", "description": "雲霧繚繞的高原地帶，滿佈浮空岩與漂浮山群，是魔導技術與自然共存的象徵。", "climate": ["晴朗", "重力反轉風暴", "星塵降臨"], "transportation": ["星舟", "傳送信標塔"], "cities": [ { "id": "lunareth", "name": "璨星城", "description": "半懸空都市，以星能塔為能源核心，城市浮動高度依季節而變。", "attractions": [ { "name": "星晶空橋", "type": "地標", "description": "透明橋梁連接三座漂浮島，夜晚會發出銀藍光芒。" }, { "name": "星芒圖書殿", "type": "博物館", "description": "蒐藏遠古旅人留下的手稿與魔法地圖。" }, { "name": "浮空市集", "type": "市集", "description": "不定時舉辦的市集，交換稀有的空島特產。" }, { "name": "引力花園", "type": "植物園", "description": "利用重力反轉技術，種植著各式奇特植物的垂直花園。" }, { "name": "觀星平台", "type": "觀景台", "description": "城市最高點的觀景平台，可欣賞璀璨星空與下方雲海。" }, { "name": "魔導競技場", "type": "競技場", "description": "進行魔導機甲或魔法對決的場所，定期舉辦精彩賽事。" } ] }, { "id": "astoria_skyport", "name": "星空港", "description": "高地最大的交通樞紐，專門處理星舟的進出。這裡有各種各樣的星舟修理工坊和貨物倉庫。", "attractions": [ { "name": "星舟博物館", "type": "博物館", "description": "展示各種歷史悠久的星舟，以及星舟建造的技術演進。" }, { "name": "雲層酒吧", "type": "酒吧", "description": "提供特色飲品，是星舟駕駛員和冒險者的聚集地，能俯瞰整個空港。" }, { "name": "軌道觀測塔", "type": "觀測站", "description": "用於監測星辰運行軌跡和天氣變化的塔樓，也開放遊客參觀部分區域。" }, { "name": "貿易廣場", "type": "廣場", "description": "來自各地的商人在此交易稀有材料和魔導零件，充滿喧囂與活力。" } ] } ], "areas": [ { "name": "幽靈峽谷", "description": "充滿神秘能量的峽谷，據說居住著星靈。這裡的浮空岩石經常會發生奇怪的移動，有時甚至會出現幻影。", "creatures": [ { "name": "星靈", "description": "半透明的能量生物，能夠操控空間和時間。" }, { "name": "浮空巨蛛", "description": "巨大的蜘蛛，能夠在浮空岩石之間移動。" } ] }, { "name": "星光礦脈", "description": "富含星能礦石的區域，是魔導師們的重要資源來源。", "resources": ["星能礦石", "月光水晶"] } ], "festivals": [ { "name": "星芒巡行", "season": "秋季", "description": "市民穿上銀藍燈飾服裝，沿空橋進行夜間遊行，並伴隨星舟空中芭蕾。" }, { "name": "星辰祭", "season": "冬至", "description": "高地居民感謝星辰的庇護，舉行盛大的祭典。" } ], "foods": ["浮蛋吐司", "星塵雪糕"], "creatures": [ { "name": "星光龍", "description": "一種擁有星光羽毛的巨龍，棲息在高地深處。牠們被認為是星辰的守護者。" } ], "culture": { "architecture_style": "高空園藝、浮動建築學", "unique_practices": ["浮空市集"] } }, { "id": "silvandale_ring", "name": "悠光森林圈", "description": "巨型環狀森林國度，棲息各種靈獸與元素生物。", "climate": ["銀葉月光雨", "晨霧繚繞", "季語花語霧"], "transportation": ["林徑靈車", "樹靈電梯"], "cities": [ { "id": "elunora", "name": "艾露朵村", "description": "精靈與人類共居，建築與樹木共生的村落。", "attractions": [ { "name": "星鹿溫泉谷", "type": "溫泉", "description": "泡湯後可暫時與動物心靈連結。" }, { "name": "季語藤市集", "type": "市集", "description": "販售季節變色的魔法藤飾與香料，也是文化交流的場所。" }, { "name": "樹靈古徑", "type": "步道", "description": "穿越古老巨樹根系形成的步道，可感受森林的生命氣息。" }, { "name": "月光湖", "type": "湖泊", "description": "月夜下湖水閃爍銀光，是精靈們舉行儀式的重要場所。" }, { "name": "織夢草藥園", "type": "藥園", "description": "種植稀有草藥和魔法植物的園區，由精靈藥師負責管理。" } ] }, { "id": "silvandale_deepwood", "name": "深林村落", "description": "隱藏在森林深處的精靈村落，以自然魔法和草藥治療聞名。", "attractions": [ { "name": "古樹神殿", "type": "神殿遺跡", "description": "由一棵古老的巨樹所構成的神殿，據說擁有強大的自然能量。" }, { "name": "靈獸棲息地", "type": "野生動物區", "description": "多種溫馴靈獸的自然棲息地，可在精靈引導下近距離觀察。" }, { "name": "回聲瀑布", "type": "瀑布", "description": "瀑布水流擊打岩石產生奇特回聲，被認為是森林的低語。" }, { "name": "符文石林", "type": "石林", "description": "天然形成的石柱群，表面刻有古老符文，充滿神秘氛圍。" } ] } ], "areas": [ { "name": "夢境沼澤", "description": "充滿迷霧和幻影的沼澤，據說能讓人進入夢境。", "creatures": [ { "name": "夢魘生物", "description": "由夢境能量形成的怪物，會攻擊旅人的心靈，並吸食夢境能量。" }, { "name": "沼澤妖精", "description": "居住在沼澤中的小精靈，擅長迷惑他人。" } ] }, { "name": "月光森林", "description": "在月光下散發著柔和光芒的森林，是精靈們進行冥想和魔法訓練的地方。", "resources": ["月光草", "夢境花"] } ], "festivals": [ { "name": "精靈收穫夜", "season": "春末", "description": "夜間舉行的歌舞節慶，感謝森林贈予的資源，並舉行靈獸祝福儀式。" }, { "name": "月光節", "season": "夏至", "description": "精靈們感謝月亮，祈求豐收的節日。" } ], "foods": ["銀藤氣泡酒", "靈果甜餅"], "creatures": [ { "name": "樹靈守護者", "description": "由森林能量形成的生物，保護著森林的平衡。" } ], "culture": { "architecture_style": "共生建築", "unique_practices": ["靈獸祝福儀式"] } }, { "id": "glavenfire_expanse", "name": "琉炎海盆", "description": "火山與礦石群島交錯的地區，是冒險者與鍊金師的天堂。", "climate": ["白日酷熱", "火星飛雨", "熔岩潮汐"], "transportation": ["蒸氣船", "火元素滑板", "熔岩鰻列車"], "cities": [ { "id": "pyricore_haven", "name": "礦輪港", "description": "漂浮在岩漿湖上的港市，擅長鍛造與秘寶交易。", "attractions": [ { "name": "炎之鱗洞", "type": "洞窟", "description": "赤焰龍留下的鱗片據說能帶來旅運加成。" }, { "name": "鍊金跳島", "type": "多點旅遊", "description": "每日跳訪七座煉金屬性小島。" }, { "name": "秘寶交易市場", "type": "市集", "description": "獨特的地下市場，進行稀有秘寶交易。" }, { "name": "熔岩溫泉", "type": "溫泉", "description": "利用地熱形成的溫泉，據說有療癒效果，但需注意安全距離。" }, { "name": "地心探勘公會", "type": "公會", "description": "冒險者們接受任務、交流情報的場所，也是獲取地底知識的中心。" } ] }, { "id": "glavenfire_forge", "name": "熔岩鍛造城", "description": "以精湛的鍛造技術聞名，這裡的工匠們能夠打造出最堅固的武器和防具。", "attractions": [ { "name": "火焰工坊", "type": "工坊", "description": "觀看工匠們鍛造武器的過程。" }, { "name": "鐵匠大師殿", "type": "殿堂", "description": "展示歷代鍛造大師的傳奇作品，是鍛造師的聖地。" }, { "name": "熔岩瀑布", "type": "自然奇觀", "description": "壯觀的熔岩流從高處傾瀉而下，為城市提供源源不斷的熱能和靈感。" }, { "name": "元素熔爐", "type": "鍛造爐", "description": "據說能融合各種元素力量的古老熔爐，是城市力量的核心。" } ] } ], "areas": [ { "name": "熔岩裂谷", "description": "充滿活火山和熔岩流的區域，是鍊金師們尋找稀有材料的地方。", "resources": ["熔岩", "火元素礦石"] }, { "name": "硫磺平原", "description": "遍布硫磺的荒涼平原，氣味刺鼻，但蘊藏著豐富的礦物資源。", "creatures": [ { "name": "硫磺魔怪", "description": "由硫磺能量形成的怪物，會噴出毒氣。" } ] } ], "festivals": [ { "name": "火鑽舞會", "season": "盛夏", "description": "火山火光下的鍊金師競技舞蹈大賽，包含元素熔岩挑戰。" }, { "name": "熔岩祭", "season": "冬至", "description": "居民向火山祈福，感謝其提供的熱能。" } ], "foods": ["熔岩烤蟹", "火紅金蘑燉飯"], "creatures": [ { "name": "元素魔獸", "description": "由火焰、岩石和能量組成的生物，是海盆中常見的危險。" } ], "culture": { "architecture_style": null, "unique_practices": ["岩漿捕撈術", "地心探勘業"] } }, { "id": "umbrades_dune", "name": "漠影遺地", "description": "一望無際的金灰沙海與時空殘影交錯之地，古文明與流沙神殿仍藏匿其中，旅客需借用時間裝置才能穿越部分區域。", "climate": ["日照強烈", "流沙風暴", "時光殘響"], "transportation": ["沙蠍馭獸車", "時空扭曲門", "風之流翔翼"], "cities": [ { "id": "duneforge", "name": "塵刃城", "description": "位於移動沙丘中央，城牆由固態魔砂構成，城市每天會緩慢位移。", "attractions": [ { "name": "流影聖殿", "type": "遺跡", "description": "會在日出與日落時現身於沙海之中，傳說曾是觀星學派的祭祀中心。" }, { "name": "時殘沙漏谷", "type": "自然奇觀", "description": "大型天然沙漏遺跡，時間在谷中會加速流動，旅客需持有「時紋鑰匙」才可進入。" }, { "name": "沙紋解讀師工會", "type": "公會", "description": "聚集沙紋解讀師的場所，他們能預測沙丘變化和城市行進路線。" }, { "name": "移動市集", "type": "市集", "description": "隨著城市移動而變換位置的市集，販售沙漠特有的商品和古文明遺物。" }, { "name": "幻影劇院", "type": "劇院", "description": "利用時光殘響技術，重現古文明歷史片段的劇院。" } ] }, { "id": "umbrades_oasis", "name": "迷霧綠洲", "description": "沙漠中的一個隱秘綠洲，擁有清澈的泉水和茂盛的植被。", "attractions": [ { "name": "古老神廟", "type": "神廟遺跡", "description": "一座被遺忘的古老神廟，據說藏有關於時間的秘密。" }, { "name": "生命之泉", "type": "泉水", "description": "綠洲的核心，據說飲用其水可恢復疲勞，甚至延緩衰老。" }, { "name": "隱蔽的商隊驛站", "type": "驛站", "description": "提供沙漠旅人補給和休息的場所，也是情報交流的秘密據點。" }, { "name": "仙人掌花園", "type": "花園", "description": "種植著各式奇特仙人掌的園區，有些種類在夜晚會發出微光。" } ] } ], "areas": [ { "name": "迷失之城", "description": "被沙塵掩埋的古老城市，據說藏有強大的魔法寶藏。" }, { "name": "沙丘迷宮", "description": "不斷變化的沙丘，充滿了陷阱和隱藏的道路。" } ], "festivals": [], "foods": ["日落辣沙", "砂香果乾"], "creatures": [ { "name": "沙影魔物", "description": "由沙塵和時間能量形成的怪物，會迷惑旅人的心靈，其能量核心「時之沙晶」是「時紋鑰匙」的重要材料。" }, { "name": "沙蜥蜴", "description": "生活在沙漠中的蜥蜴，能夠隱藏在沙中。" } ], "culture": { "architecture_style": "沙地應變建築", "unique_practices": ["移動式農業", "沙紋解讀師"] } }, { "id": "frostink_spires", "name": "雪墨尖塔群", "description": "冰封的北境高原，長年被星辰與墨雪覆蓋。許多塔樓中居住著語術學派與夢境書寫者，是知識與神秘的聖域。", "climate": ["墨雪紛飛", "星辰凍霧", "夢境極光"], "transportation": ["雪狐雪橇", "墨羽傳書鳥", "夢語水晶浮梯"], "cities": [ { "id": "inkwinter_reach", "name": "墨隱塔市", "description": "黑曜石打造的高塔圍繞中央「知識之井」，城市會根據夢境進行地形微調。", "attractions": [ { "name": "雪語書塚", "type": "圖書館", "description": "一座會自動生成書籍的雪地圖書館，記錄著每一位旅人夜晚夢境。" }, { "name": "星雪旋樓", "type": "塔樓", "description": "螺旋形結晶建築，登上塔頂可窺見星之知識，據說偶爾會預言未來旅程。" }, { "name": "知識之井", "type": "能量核心", "description": "城市的能量核心，也是靈感之源，許多學者在此冥想。" }, { "name": "冰雕藝術館", "type": "藝術館", "description": "展示由冰雪雕刻而成的藝術品，每年會根據夢境主題更新。" }, { "name": "夢境市場", "type": "市集", "description": "販售夢境符文、墨雪點心和冰晶飾品的市集。" } ] }, { "id": "frostink_dreamhaven", "name": "夢境聖殿", "description": "一座位於高原深處的神秘聖殿，據說能讓人進入夢境世界。", "attractions": [ { "name": "夢境回廊", "type": "迷宮", "description": "一個充滿幻象的迷宮，每走一步都會進入不同的夢境。" }, { "name": "心靈鏡湖", "type": "湖泊", "description": "據說能映照出內心深處慾望與恐懼的湖泊，是修行者挑戰自我的地方。" }, { "name": "預言祭壇", "type": "祭壇", "description": "古老的祭壇，據說能透過儀式預見未來，但需要付出代價。" }, { "name": "星光冥想室", "type": "冥想室", "description": "專為冥想者設計的房間，利用星辰能量助其進入深度冥想。" } ] } ], "areas": [ { "name": "冰晶森林", "description": "覆蓋著冰晶的森林，在月光下閃耀著美麗的光芒。", "creatures": [ { "name": "冰霜熊", "description": "生活在冰晶森林中的巨大熊，擁有強大的力量。" }, { "name": "雪妖", "description": "居住在冰晶森林中的精靈，擅長操控冰雪。" } ] }, { "name": "星辰山脈", "description": "高聳入雲的山脈，可以清晰地看到星空。", "resources": ["星辰礦石", "冰霜草"] } ], "festivals": [ { "name": "月光節", "season": "夏至", "description": "精靈們感謝月亮，祈求豐收的節日，並舉行星辰連結儀式。" }, { "name": "星辰祭", "season": "冬至", "description": "居民向星辰祈福，感謝其庇護。" } ], "foods": ["墨雪糖糕", "夢語鹽魚"], "creatures": [ { "name": "冰霜巨狼", "description": "由冰雪能量形成的怪物，會攻擊旅人的心靈，咆哮聲能引起小型雪崩。" } ], "culture": { "architecture_style": "夢境建築學", "unique_practices": ["星辰連結儀式"] } }, { "id": "echoing_chasm", "name": "迴音深淵", "description": "一道深不見底的巨大裂谷，位於大陸中央偏西，終年被濃密的迷霧籠罩，深處迴盪著難以名狀的低語。據說這裡通往地底深處的神秘維度，時間與空間在此扭曲，古老的秘密和被遺忘的生物棲息其中。深淵周圍的地面佈滿了奇特的符文岩石，散發著微弱的光芒。", "climate": ["永恆迷霧", "空間漣漪"], "transportation": ["迴音繩索橋", "聲波探測艇", "虛空裂隙"], "cities": [ { "id": "silent_outpost", "name": "靜默觀測站", "description": "建立在深淵邊緣的一座小型要塞，由研究深淵的學者和冒險者共同駐守。這裡有專門用於研究符文、分析深淵低語的實驗室，也是探索深淵的唯一安全出發點。", "attractions": [ { "name": "符文石碑陣", "type": "古老石碑", "description": "一組環繞觀測站的古老石碑，表面刻有奇特的符文，據說能鎮壓深淵中的某些力量。" }, { "name": "低語圖書館", "type": "圖書館", "description": "收藏著關於深淵傳說、探險日誌以及從深淵中帶出的奇異物品的圖書館。" }, { "name": "深淵之眼", "type": "觀測點", "description": "位於觀測站突出部分的平台，可俯瞰部分迷霧籠罩的深淵，感受其深不可測。" }, { "name": "空間扭曲實驗室", "type": "實驗室", "description": "研究深淵空間扭曲現象的實驗室，偶爾會進行公開演示。" }, { "name": "次元裂縫研究區", "type": "研究區", "description": "探索並分析從深淵中偶爾出現的臨時次元裂縫的區域，危險但充滿發現。" } ] } ], "areas": [ { "name": "扭曲迴廊", "description": "深淵內部最外層的區域，地形極其複雜，充斥著不斷變化的空間錯位和幻影，許多探險者在此迷失。", "creatures": [ { "name": "迴音幽魂", "description": "由迷失在迴廊中的靈魂與深淵能量結合而成，能模仿旅人的聲音進行誘惑。" }, { "name": "符文巨蟲", "description": "棲息在符文岩石下的巨型蟲類，會吞噬符文能量，並在地面留下閃爍的印記。" } ] }, { "name": "無光之底", "description": "迴音深淵的最深處，常年不見天日，只有微弱的符文光芒和生物的磷光閃爍。", "resources": ["深淵結晶", "虛空菌菇"] } ], "festivals": [ { "name": "迷霧探源日", "season": "無固定日期", "description": "每當深淵迷霧短暫消散，觀測站會舉行紀念儀式並派遣探險隊深入探查。" } ], "foods": ["符文能量棒", "螢光魚乾"], "creatures": [ { "name": "守護者伊德", "description": "一種巨大的、由空間能量構成的類人生物，據說居住在無光之底，是深淵核心秘密的守護者。" } ] }, { "id": "sky_sanctuary", "name": "天空聖域", "description": "一片漂浮於高空，被永恆彩虹環繞的神秘島嶼群。這裡是古老知識的殿堂，被認為是最初的星辰能量匯聚之地，居住著擁有高度智慧的元素生物和神秘的「天空織夢師」。島嶼之間有著天然形成的能量橋，連接不同的研究與修行場所。", "climate": ["永恆彩虹", "聖域微風"], "transportation": ["彩虹橋", "光羽飛艇", "星光傳送陣"], "cities": [ { "id": "cloud_library", "name": "雲端圖書館", "description": "聖域的核心，一座完全由光元素和水晶構成的半透明建築群，藏有艾爾瑟爾多最古老的知識，包括星辰魔法、元素學、遠古預言等。圖書館內部的書架會根據訪客的意圖自動重組。", "attractions": [ { "name": "智慧之眼", "type": "水晶球", "description": "圖書館中央的一顆巨大水晶球，據說能映照出世間萬物的知識，但需要特殊的冥想技巧才能啟用。" }, { "name": "織夢迴廊", "type": "場所", "description": "天空織夢師進行冥想和創造夢境的場所，訪客偶爾能窺見他們編織出的美妙景象。" }, { "name": "元素共鳴室", "type": "冥想室", "description": "特殊設計的房間，訪客可在其中感受並學習不同元素的能量流動。" }, { "name": "古老預言壁畫", "type": "藝術品", "description": "描繪艾爾瑟爾多遠古預言和重大事件的壁畫，據說具有啟示性力量。" }, { "name": "星辰之池", "type": "池塘", "description": "據說能反映出星辰奧秘的清澈池水，是天空織夢師獲取靈感的來源之一。" } ] } ], "areas": [ { "name": "元素和諧庭園", "description": "各種純粹的元素精靈棲息地，不同屬性的庭園相互連接，充滿生機與能量流動。", "creatures": [ { "name": "光之精靈", "description": "由純粹的光元素構成，能治癒傷口，引導迷途者。" }, { "name": "風之語者", "description": "能夠操控氣流，傳遞訊息的元素生物，形似飄逸的絲帶。" } ] }, { "name": "星塵神殿遺跡", "description": "聖域中最古老的區域，據說是艾爾瑟爾多最初接受星辰能量洗禮的地方，遺留著許多破損但仍充滿力量的古老符文和祭壇。", "resources": ["聖光礦石", "織夢花"] } ], "festivals": [ { "name": "虹光慶典", "season": "每數十年一次", "description": "當所有彩虹橋完全顯現並達到最穩定狀態時，聖域居民會邀請少數外界訪客一同參與，慶祝知識與和諧。" } ], "foods": ["雲莓露", "光之結晶麵包"], "creatures": [ { "name": "彩虹鳳凰", "description": "聖域的傳奇生物，由彩虹能量和光元素凝聚而成，只有在極其和平與諧的時刻才會現身。牠的羽毛能治癒一切傷痛。" }, { "name": "天空織夢師", "description": "非實體的智慧生物，能編織和操控夢境，引導尋求知識的訪客，他們是聖域知識的守護者和傳遞者。" } ] } ], "world_overview": { "main_driving_force": "瀰漫於天地間的「星辰能量」，以不同形式在各區域展現，影響文明興衰、魔法演進及生物特徵。", "inter_regional_dynamics": { "astoria_silvandale": { "interaction": "高地的魔導技術可為森林提供能源或通訊，森林的自然資源彌補高地不足。例如，傳送信標塔與樹靈電梯可能建立魔法共鳴。", "conflict": "魔導科技過度開發可能威脅森林生態，採礦可能影響森林魔力流動。對星能礦石的需求可能與森林的月光草保護觀念衝突。" }, "glavenfire_umbrades": { "interaction": "海盆的鍊金術士可能渴望漠影遺地的時紋鑰匙或古文明魔法知識。漠影遺地可能需要海盆的堅硬金屬。", "conflict": "海盆粗獷的開採方式可能與漠影遺地保護古文明遺址產生摩擦。對稀有資源的追求可能導致貿易糾紛甚至武裝衝突。" }, "frostink_all_regions": { "interaction": "雪墨尖塔群的雪語書塚記錄夢境，是解謎關鍵。對魔法符文和星辰礦石的研究能為其他地區提供魔法增益或能量儲存方案。", "conflict": "雪墨尖塔群對知識的壟斷或選擇性分享可能引起不滿，禁忌知識的保管可能引發覬覦與衝突。" } }, "common_threats_legends": { "legends": "流傳各地的傳說暗示區域間深層連結，例如星光龍的傳說可能與艾爾瑟爾多星辰能量流動有關。", "common_threat": "可能存在「虛無侵蝕」現象，吞噬星辰能量，導致自然災難加劇，迫使各區域合作應對。" }, "communication_network": "建立由各區域合作維護的「水晶通訊網絡」，利用「月光水晶」和「星能礦石」作為節點，實現跨區域實時通訊。" } };
+        
+        const mergedData = {
+            world_name: newData.world_name,
+            world_overview: newData.world_overview,
+            regions: [...existingData.regions, ...newData.regions]
+        };
+
+        // --- 公會卡範例資料 ---
+        const guildCardData = {
+            "guild_card": { 
+                "name": "Kael Stormwalker", 
+                "avatar_url": "https://i.pinimg.com/736x/32/ac/f1/32acf17e61973fc5783e90855f87c11d.jpg",
+                "title": "Seeker of Forgotten Paths", 
+                "level": 17, 
+                "race": "Moonshade Elf", 
+                "class": "Chronomancer", 
+                "start_date": "2025-07-10", 
+                "visited_places": 23, 
+                "completed_quests": 15, 
+                "badges": [ "Lantern Festival Explorer", "Sky Ferry First Flight", "Forest Whisperer", "Volcano Diver" ], 
+                "partner": { "name": "Luma", "type": "Star Fox Familiar", "level": 5 }, 
+                "quote": "Let the stars decide the next stop.", 
+                "guild_rank": "Silver Wanderer" 
+            }
+        };
+
+        function getCityImage(cityId) {
+            const imageMap = {
+                'aerion': 'https://i.pinimg.com/736x/21/76/56/217656f11ce49996a1f4fd71ebc6bdfc.jpg',
+                'moonglade': 'https://i.pinimg.com/736x/27/1c/7b/271c7becdca009f49d4f90f5a2be837e.jpg',
+                'blackiron': 'https://i.pinimg.com/736x/de/b1/75/deb175962b1f1640568fbed831e4d08f.jpg',
+                'lunareth': 'https://i.pinimg.com/736x/47/ce/a4/47cea47ebe96ce0693be010576706705.jpg', 
+                'astoria_skyport': 'https://i.pinimg.com/1200x/c2/af/5c/c2af5c608cf78f554ba03c9c142a7527.jpg', 
+                'elunora': 'https://i.pinimg.com/1200x/5a/f6/b1/5af6b173b5de9b5b3ea611afc44a91c4.jpg', 
+                'silvandale_deepwood': 'https://i.pinimg.com/736x/ea/db/f3/eadbf3ea25f0cc23151137b571242838.jpg', 
+                'pyricore_haven': 'https://i.pinimg.com/1200x/03/b2/34/03b23479dff7fa4677ea5679ab1fabb7.jpg', 
+                'glavenfire_forge': 'https://i.pinimg.com/1200x/5b/3c/cc/5b3ccc443cec7fa5d2b3e2e7d9172d44.jpg', 
+                'duneforge': 'https://i.pinimg.com/1200x/ee/86/63/ee8663ac1b011bd0553a241103550b2b.jpg', 
+                'umbrades_oasis': 'https://i.pinimg.com/736x/3d/50/df/3d50dfa639f52a95f1e15c75c3d23d71.jpg', 
+                'inkwinter_reach': 'https://i.pinimg.com/736x/7f/e3/15/7fe31533e4efeba3258f65f58aac288e.jpg', 
+                'frostink_dreamhaven': 'https://i.pinimg.com/736x/b5/42/d6/b542d63308853edb31112c941e5a375c.jpg',
+                'silent_outpost': 'https://i.pinimg.com/1200x/b2/87/ef/b287ef5cefd37ec52172f21b31b7fd4d.jpg',
+                'cloud_library': 'https://i.pinimg.com/1200x/ae/c5/54/aec55457bfd7689dd4b1ffa885ed644f.jpg',
+                'default': 'https://placehold.co/400x400/cccccc/ffffff?text=No+Image'
+            };
+            return imageMap[cityId] || imageMap['default'];
+        }
+        function getAttractionImage(attractionName) {
+            const imageMap = {
+                '永恆迴廊': 'https://i.pinimg.com/originals/7e/c9/a3/7ec9a3847493198162817833a60c0c37.jpg', '虹之徑': 'https://i.pinimg.com/originals/4e/04/18/4e0418a1a63c87428c94a640ce1a17a7.jpg', '月光聖泉': 'https://i.pinimg.com/originals/63/06/f3/6306f363073a388b74c5686013e8020a.jpg', '精靈迴廊': 'https://i.pinimg.com/originals/c9/e7/a7/c9e7a775104d4986689d13719114b301.jpg', '黑鐵市集': 'https://cdna.artstation.com/p/assets/images/images/016/547/554/large/alex-rommel-dwarven-hall.jpg', '地脈熔岩鐵道': 'https://i.pinimg.com/originals/e7/8e/31/e78e317075727d277771f2874c76b42b.jpg', '星晶空橋': 'https://i.pinimg.com/originals/7e/c9/a3/7ec9a3847493198162817833a60c0c37.jpg', '星芒圖書殿': 'https://i.pinimg.com/originals/b4/3a/91/b43a918f203a5559abc1405a9b9a62cf.jpg', '浮空市集': 'https://i.pinimg.com/originals/4e/04/18/4e0418a1a63c87428c94a640ce1a17a7.jpg', '引力花園': 'https://i.pinimg.com/originals/8c/2a/3a/8c2a3a1f8790b91e98f7e452a8d4b316.jpg', '星舟博物館': 'https://cdna.artstation.com/p/assets/images/images/009/840/594/large/greg-rutkowski-airship-factory-1920.jpg', '雲層酒吧': 'https://i.pinimg.com/originals/d6/b8/96/d6b8964531853d5a4714150a0a5f6e87.jpg', '星鹿溫泉谷': 'https://i.pinimg.com/originals/6c/3e/1d/6c3e1d15d398418086035f479a0915a7.jpg', '季語藤市集': 'https://i.pinimg.com/originals/c9/e7/a7/c9e7a775104d4986689d13719114b301.jpg', '古樹神殿': 'https://i.pinimg.com/originals/a4/c8/16/a4c8163fcf50c43615a761e60a3ff214.jpg', '靈獸棲息地': 'https://i.pinimg.com/originals/1b/c0/81/1bc0818a7c64c7f53f3e1b73111f185c.jpg', '炎之鱗洞': 'https://i.pinimg.com/originals/42/89/3b/42893b8e04b4914f6b280143a5307399.jpg', '鍊金跳島': 'https://i.pinimg.com/originals/a9/e5/7e/a9e57e93811568d40783023e38701e74.jpg', '火焰工坊': 'https://i.pinimg.com/originals/e7/8e/31/e78e317075727d277771f2874c76b42b.jpg', '鐵匠大師殿': 'https://cdna.artstation.com/p/assets/images/images/016/547/554/large/alex-rommel-dwarven-hall.jpg', '流影聖殿': 'https://i.pinimg.com/originals/e8/c2/78/e8c2780517454865108861dfe464506f.jpg', '時殘沙漏谷': 'https://i.pinimg.com/originals/9e/f3/f1/9ef3f1016503c513c1ef7b59a68586c0.jpg', '古老神廟': 'https://i.pinimg.com/originals/7e/63/c4/7e63c4613c7a2164c9257e891e459806.jpg', '生命之泉': 'https://i.pinimg.com/originals/63/06/f3/6306f363073a388b74c5686013e8020a.jpg', '雪語書塚': 'https://i.pinimg.com/originals/18/d3/78/18d378e47444bd917a10ce8a0a4b7c61.jpg', '星雪旋樓': 'https://i.pinimg.com/originals/0a/f0/54/0af0545f65349208a4f07a4a273c5b57.jpg', '夢境回廊': 'https://i.pinimg.com/originals/f3/04/e1/f304e101f3f7a3712d93e2307220b332.jpg', '心靈鏡湖': 'https://i.pinimg.com/originals/e1/e0/75/e1e0753a3891d4e7436060c1d1a8c903.jpg',
+                '符文石碑陣': 'https://i.pinimg.com/originals/3c/6e/0b/3c6e0b7b9f3b9b9c9b9c9b9c9b9c9b9c.jpg', '低語圖書館': 'https://i.pinimg.com/originals/b4/3a/91/b43a918f203a5559abc1405a9b9a62cf.jpg', '深淵之眼': 'https://i.pinimg.com/originals/2c/3c/4b/2c3c4b267869584586f323851aa23e3e.jpg', '智慧之眼': 'https://i.pinimg.com/originals/0a/f0/54/0af0545f65349208a4f07a4a273c5b57.jpg', '織夢迴廊': 'https://i.pinimg.com/originals/f3/04/e1/f304e101f3f7a3712d93e2307220b332.jpg', '元素共鳴室': 'https://i.pinimg.com/originals/a9/e5/7e/a9e57e93811568d40783023e38701e74.jpg',
+                'default': 'https://placehold.co/200x200/cccccc/ffffff?text=Attraction'
+            };
+            const key = Object.keys(imageMap).find(k => attractionName.includes(k));
+            return imageMap[key] || imageMap['default'];
+        }
+
+        let allCities = [];
+        const pages = document.querySelectorAll('.page');
+        const navItems = document.querySelectorAll('.nav-item');
+        const locationGrid = document.getElementById('location-grid');
+        const detailPageContainer = document.getElementById('detail-page');
+        const worldNamePlaceholder = document.getElementById('world-name-placeholder');
+        const tripsPageContainer = document.getElementById('trips-page');
+        const profilePageContainer = document.getElementById('profile-page');
+        const worldOverviewContainer = document.getElementById('world-overview-container');
+
+        // --- 資料儲存邏輯 ---
+        function getSavedAttractionIds() { return JSON.parse(localStorage.getItem('savedAttractions')) || []; }
+        function saveAttractionIds(ids) { localStorage.setItem('savedAttractions', JSON.stringify(ids)); }
+        function getTrips() { return JSON.parse(localStorage.getItem('userTrips')) || []; }
+        function saveTrips(trips) { localStorage.setItem('userTrips', JSON.stringify(trips)); }
+
+        function toggleSaveAttraction(attractionId, buttonElement) {
+            let savedIds = getSavedAttractionIds();
+            const isCurrentlySaved = savedIds.includes(attractionId);
+            if (isCurrentlySaved) {
+                savedIds = savedIds.filter(id => id !== attractionId);
+            } else {
+                savedIds.push(attractionId);
+            }
+            saveAttractionIds(savedIds);
+            
+            if (buttonElement) {
+                buttonElement.classList.toggle('saved', !isCurrentlySaved);
+            }
+        }
+
+        function isAttractionSaved(attractionId) {
+            return getSavedAttractionIds().includes(attractionId);
+        }
+
+        function navigateTo(pageId, params = {}) {
+            pages.forEach(page => page.classList.remove('active'));
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) targetPage.classList.add('active');
+            navItems.forEach(item => item.classList.toggle('active', item.dataset.page === pageId));
+            
+            if (pageId === 'trips-page') {
+                if (params.tripId) {
+                    renderPlannerView(params.tripId);
+                } else {
+                    renderTripListView();
+                }
+            } else if (pageId === 'profile-page') {
+                renderProfilePage();
+            }
+            window.scrollTo(0, 0);
+        }
+
+        function createLocationCard(location) { const featuresHTML = location.fullData.city.attractions.slice(0, 2).map(feature => `<li class="flex items-center text-sm text-gray-600 truncate"><svg data-lucide="sparkle" class="w-4 h-4 mr-2 text-purple-400 flex-shrink-0"></svg>${feature.name}</li>`).join(''); return `<div class="bg-white rounded-2xl p-4 flex items-center gap-4 shadow-sm hover:shadow-md transition-shadow duration-300 cursor-pointer" data-action="view-location" data-location-id="${location.id}"><div class="w-2/5"><h3 class="text-lg font-bold text-gray-800">${location.fullData.city.name}</h3><p class="text-xs text-gray-400 mb-3">${location.fullData.region.name}</p><ul class="space-y-1">${featuresHTML}</ul></div><div class="w-3/5 h-32 rounded-xl overflow-hidden"><img src="${location.imageUrl}" alt="[${location.fullData.city.name}的插畫]" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cccccc/ffffff?text=Image+Error';"></div></div>`; }
+
+        function createDetailPage(locationId) {
+            const location = allCities.find(c => c.id === locationId);
+            if (!location) return;
+            const { city, region } = location.fullData;
+            const attractionsHTML = city.attractions.map(attr => { 
+                const attractionId = `${city.id}-${attr.name}`;
+                const saved = isAttractionSaved(attractionId);
+                return ` <div class="bg-white p-3 rounded-xl border border-gray-200 flex items-center gap-4"> <img src="${getAttractionImage(attr.name)}" alt="[${attr.name}的插畫]" class="w-20 h-20 md:w-24 md:h-24 rounded-lg object-cover flex-shrink-0"> <div class="flex-grow"> <p class="font-semibold text-gray-800">${attr.name} <span class="text-xs font-normal text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full ml-1">${attr.type}</span></p> <p class="text-sm text-gray-600 mt-1">${attr.description}</p> </div> <button class="bookmark-btn ${saved ? 'saved' : ''} text-gray-400 hover:text-purple-500 transition-colors p-2" data-action="toggle-save" data-attraction-id="${attractionId}"> <svg data-lucide="bookmark" class="w-6 h-6"></svg> </button> </div>`; 
+            }).join('');
+            const climateHTML = (region.climate || []).map(c => `<span class="info-tag"><svg data-lucide="cloud-sun" class="w-4 h-4 mr-2"></svg>${c}</span>`).join('');
+            const transportHTML = (region.transportation || []).map(t => `<span class="info-tag"><svg data-lucide="rocket" class="w-4 h-4 mr-2"></svg>${t}</span>`).join('');
+            
+            const areasHTML = (region.areas || []).map(area => {
+                const creaturesHTML = (area.creatures || []).map(creature => `<div class="flex items-start mt-2"><svg data-lucide="paw-print" class="w-4 h-4 mr-3 mt-1 text-orange-600 flex-shrink-0"></svg><div><p class="font-semibold text-orange-800">${creature.name}</p><p class="text-xs text-gray-600">${creature.description}</p></div></div>`).join('');
+                const resourcesHTML = (area.resources || []).map(resource => `<span class="text-xs bg-green-100 text-green-800 font-medium mr-2 px-2.5 py-0.5 rounded-full">${resource}</span>`).join('');
+                return `
+                <div class="bg-orange-50 p-4 rounded-lg border border-orange-200">
+                    <p class="font-semibold text-gray-800">${area.name}</p>
+                    <p class="text-sm text-gray-600 mt-1 mb-3">${area.description}</p>
+                    ${creaturesHTML ? `<div class="border-t border-orange-200 pt-3"><h4 class="text-sm font-semibold text-orange-900">生態筆記</h4>${creaturesHTML}</div>` : ''}
+                    ${resourcesHTML ? `<div class="mt-3"><h4 class="text-sm font-semibold text-green-900 mb-2">區域資源</h4>${resourcesHTML}</div>` : ''}
+                </div>`;
+            }).join('') || '<p class="text-sm text-gray-500">此區域周邊尚無已知的探索地點。</p>';
+
+            let cultureHTML = '';
+            if (region.culture) {
+                const practicesHTML = (region.culture.unique_practices || []).map(p => `<li class="flex items-center text-sm text-gray-700">${p}</li>`).join('');
+                cultureHTML = `
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">文化特色</h3>
+                    <div class="bg-gray-50 p-4 rounded-xl space-y-2">
+                        ${region.culture.architecture_style ? `<p><strong>建築風格：</strong> ${region.culture.architecture_style}</p>` : ''}
+                        ${practicesHTML ? `<p class="font-bold mt-2">獨特習俗：</p><ul class="list-disc list-inside">${practicesHTML}</ul>` : ''}
+                    </div>
+                </div>`;
+            }
+
+            const regionCreaturesHTML = (region.creatures || []).map(creature => `
+                <div class="bg-red-50 p-4 rounded-lg border border-red-200">
+                    <p class="font-semibold text-red-800 flex items-center"><svg data-lucide="dragon" class="w-5 h-5 mr-2"></svg>${creature.name}</p>
+                    <p class="text-sm text-red-700 mt-1">${creature.description}</p>
+                </div>
+            `).join('') || '';
+
+            const festivalsHTML = (region.festivals || []).map(f => `<div class="bg-purple-50 p-4 rounded-lg border border-purple-200"><p class="font-semibold text-purple-800">${f.name} <span class="text-xs font-normal text-purple-600">(${f.season})</span></p><p class="text-sm text-purple-700 mt-1">${f.description}</p></div>`).join('') || '<p class="text-sm text-gray-500">此區域暫無大型節慶記錄。</p>';
+            const foodsHTML = (region.foods || []).map(food => `<li class="flex items-center"><svg data-lucide="croissant" class="w-4 h-4 mr-3 text-amber-500"></svg>${food}</li>`).join('') || '<li class="text-sm text-gray-500">暫無特色美食記錄。</li>';
+
+            detailPageContainer.innerHTML = ` <button data-action="view-explore-page" class="flex items-center text-gray-500 mb-6 hover:text-black transition-colors"><svg class="w-5 h-5 mr-2" data-lucide="arrow-left"></svg>返回探索</button> <div class="w-full h-64 rounded-2xl overflow-hidden shadow-lg mb-6"><img src="${location.imageUrl}" alt="[${city.name}的插畫]" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/800x600/cccccc/ffffff?text=Image+Error';"></div> <h1 class="text-3xl font-bold text-gray-800">${city.name}</h1> <p class="text-base text-gray-500 mt-1 mb-6">${region.name}</p> <div class="bg-gray-50 p-4 rounded-xl mb-6"><p class="text-base leading-relaxed">${city.description}</p></div> <div class="space-y-6"> <div><h3 class="text-xl font-bold text-gray-800 mb-4">主要景點</h3><div class="space-y-3">${attractionsHTML}</div></div> <div><h3 class="text-xl font-bold text-gray-800 mb-4">周邊探索</h3><div class="space-y-3">${areasHTML}</div></div> ${regionCreaturesHTML ? `<div><h3 class="text-xl font-bold text-gray-800 mb-4">區域代表生物</h3><div class="space-y-3">${regionCreaturesHTML}</div></div>` : ''} <div><h3 class="text-xl font-bold text-gray-800 mb-4">區域資訊</h3><div class="bg-gray-50 p-4 rounded-xl space-y-4"><div class="flex flex-wrap gap-2">${climateHTML}</div><div class="flex flex-wrap gap-2">${transportHTML}</div></div></div> ${cultureHTML} <div><h3 class="text-xl font-bold text-gray-800 mb-4">節慶與文化</h3><div class="space-y-3">${festivalsHTML}</div></div> <div><h3 class="text-xl font-bold text-gray-800 mb-4">在地美食</h3><ul class="space-y-2 pl-2">${foodsHTML}</ul></div> </div>`;
+            lucide.createIcons();
+            getSavedAttractionIds().forEach(id => { const button = document.querySelector(`.bookmark-btn[data-attraction-id="${id}"]`); if (button) { button.classList.add('saved'); } });
+            navigateTo('detail-page');
+        }
+
+        // --- 旅程頁面渲染邏輯 ---
+        function renderTripListView() {
+            const trips = getTrips();
+            const tripsHTML = trips.map(trip => `
+                <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm cursor-pointer hover:border-purple-300" data-action="view-trip" data-trip-id="${trip.id}">
+                    <h3 class="font-bold text-lg text-gray-800">${trip.title}</h3>
+                    <p class="text-sm text-gray-500">${trip.days.length} 天的冒險</p>
+                </div>
+            `).join('');
+
+            tripsPageContainer.innerHTML = `
+                <header class="my-6 flex justify-between items-center">
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-800">我的旅程</h1>
+                        <p class="mt-1 text-gray-500">管理你的冒險計畫</p>
+                    </div>
+                    <button class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors text-sm font-semibold" data-action="create-trip">建立新旅程</button>
+                </header>
+                <div class="space-y-3">${tripsHTML || `<div class="text-center py-16"><svg class="w-12 h-12 mx-auto text-gray-300" data-lucide="map"></svg><p class="text-gray-400 mt-4">尚未建立任何旅程。</p></div>`}</div>
+            `;
+            lucide.createIcons();
+        }
+
+        function createNewTrip() {
+            const tripTitle = prompt("請為您的新旅程命名：", "索拉利亞三日探索");
+            if (tripTitle) {
+                const trips = getTrips();
+                const newTrip = {
+                    id: `trip-${Date.now()}`,
+                    title: tripTitle,
+                    days: [ { attractions: [] }, { attractions: [] }, { attractions: [] } ] // 預設三天
+                };
+                trips.push(newTrip);
+                saveTrips(trips);
+                navigateTo('trips-page', { tripId: newTrip.id });
+            }
+        }
+
+        function renderPlannerView(tripId) {
+            const trips = getTrips();
+            const trip = trips.find(t => t.id === tripId);
+            if (!trip) { renderTripListView(); return; }
+
+            const savedAttractionIds = getSavedAttractionIds();
+            const paletteHTML = savedAttractionIds.map(id => {
+                const [cityId, attractionName] = id.split('-');
+                const cityData = allCities.find(c => c.id === cityId);
+                if (!cityData) return '';
+                const attraction = cityData.fullData.city.attractions.find(a => a.name === attractionName);
+                if (!attraction) return '';
+                return `
+                    <div class="draggable-item bg-white p-2 rounded-lg border flex items-center gap-2" draggable="true" ondragstart="dragStart(event, '${id}')">
+                         <img src="${getAttractionImage(attraction.name)}" alt="[${attraction.name}的插畫]" class="w-10 h-10 rounded-md object-cover flex-shrink-0">
+                         <div>
+                            <p class="font-semibold text-sm">${attraction.name}</p>
+                            <p class="text-xs text-gray-500">${cityData.fullData.city.name}</p>
+                         </div>
+                    </div>`;
+            }).join('') || '<p class="text-xs text-gray-400 text-center">沒有已收藏的景點。</p>';
+
+            const timelineHTML = trip.days.map((day, index) => {
+                const dayAttractionsHTML = day.attractions.map(id => {
+                    const [cityId, attractionName] = id.split('-');
+                    const cityData = allCities.find(c => c.id === cityId);
+                    if (!cityData) return '';
+                    const attraction = cityData.fullData.city.attractions.find(a => a.name === attractionName);
+                    if (!attraction) return '';
+                    return `<div class="bg-white p-2 rounded-lg border text-sm">${attraction.name}</div>`;
+                }).join('');
+
+                return `
+                    <div class="mb-4">
+                        <h4 class="font-bold mb-2">第 ${index + 1} 天</h4>
+                        <div class="drop-zone bg-gray-100 p-2 rounded-lg border-2 border-transparent space-y-2" data-day-index="${index}" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="drop(event, '${trip.id}')">
+                            ${dayAttractionsHTML || '<p class="text-xs text-gray-400 text-center py-4">將景點拖曳至此</p>'}
+                        </div>
+                    </div>`;
+            }).join('');
+
+            tripsPageContainer.innerHTML = `
+                <header class="my-6">
+                    <button data-action="view-trip-list" class="flex items-center text-gray-500 mb-4 hover:text-black"><svg class="w-4 h-4 mr-2" data-lucide="arrow-left"></svg>返回旅程列表</button>
+                    <h1 class="text-3xl font-bold text-gray-800">${trip.title}</h1>
+                    <p class="mt-1 text-gray-500">拖曳左側景點以安排行程。</p>
+                </header>
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="w-full md:w-1/3">
+                        <h3 class="font-bold text-lg mb-2">已收藏景點</h3>
+                        <div class="bg-gray-50 p-2 rounded-lg space-y-2 max-h-96 overflow-y-auto">
+                            ${paletteHTML}
+                        </div>
+                    </div>
+                    <div class="w-full md:w-2/3">
+                        <h3 class="font-bold text-lg mb-2">行程時間軸</h3>
+                        <div>${timelineHTML}</div>
+                    </div>
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        // --- 公會卡渲染邏輯 ---
+        function renderProfilePage() {
+            profilePageContainer.innerHTML = `
+                <header class="my-6">
+                    <h1 class="text-3xl font-bold text-gray-800">旅人檔案</h1>
+                    <p class="mt-1 text-gray-500">你的冒險者公會卡</p>
+                </header>
+                <div class="guild-card rounded-lg w-full max-w-md mx-auto">
+                    <div class="guild-card-border rounded-lg">
+                        <div class="guild-card-inner-border h-full">
+                            <div class="p-4 md:p-6 text-[#5C4033]">
+                                <header class="text-center border-b-2 border-dashed border-[#D9C6AD] pb-4 mb-4">
+                                    <p id="guildRank" class="font-fantasy text-lg guild-rank-glow text-[#A98B71]"></p>
+                                    <h1 id="travelerName" class="font-fantasy text-4xl font-bold"></h1>
+                                    <h2 id="travelerTitle" class="text-sm text-[#856d5b] italic mt-1"></h2>
+                                </header>
+                                <div class="grid grid-cols-3 gap-4 mb-6">
+                                    <div class="col-span-1 flex flex-col items-center">
+                                        <div class="w-24 h-24 rounded-full border-2 border-[#C1A98A] p-1 bg-white mb-2">
+                                            <img id="travelerAvatar" src="https://placehold.co/100x100/A98B71/FFFFFF?text=Kael" alt="Traveler Avatar" class="rounded-full w-full h-full object-cover">
+                                        </div>
+                                        <div class="text-center">
+                                            <p class="text-xs">LVL</p>
+                                            <p id="level" class="font-fantasy text-2xl font-bold"></p>
+                                        </div>
+                                        <div class="w-full xp-bar-bg rounded-full h-2 mt-1">
+                                            <div id="xpBar" class="xp-bar-fill h-2 rounded-full"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-span-2 space-y-3">
+                                        <div class="flex items-center"><i data-lucide="user-round" class="w-4 h-4 mr-2 text-[#A98B71]"></i><span id="raceClass" class="text-sm"></span></div>
+                                        <div class="flex items-center"><i data-lucide="calendar" class="w-4 h-4 mr-2 text-[#A98B71]"></i><span id="startDate" class="text-sm"></span></div>
+                                        <div class="grid grid-cols-2 gap-2 text-center mt-2">
+                                            <div class="bg-[#F5F0E9] p-2 rounded-md"><p id="visitedPlaces" class="font-bold text-lg"></p><p class="text-xs">地區探訪</p></div>
+                                            <div class="bg-[#F5F0E9] p-2 rounded-md"><p id="completedQuests" class="font-bold text-lg"></p><p class="text-xs">任務完成</p></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="partnerSection" class="bg-[#F5F0E9] p-3 rounded-lg mb-6 flex items-center gap-3">
+                                    <i data-lucide="paw-print" class="w-8 h-8 text-[#A98B71]"></i>
+                                    <div><p class="font-bold" id="partnerName"></p><p class="text-xs" id="partnerInfo"></p></div>
+                                </div>
+                                <div>
+                                    <h3 class="font-fantasy text-center text-lg mb-3">成就徽章</h3>
+                                    <div id="badges" class="flex justify-center gap-3 flex-wrap"></div>
+                                </div>
+                                <footer class="text-center border-t-2 border-dashed border-[#D9C6AD] pt-4 mt-6"><p id="quote" class="text-sm italic">""</p></footer>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            populateGuildCard(guildCardData);
+            lucide.createIcons();
+        }
+
+        function populateGuildCard(data) {
+            const card = data.guild_card;
+            document.getElementById('guildRank').textContent = card.guild_rank;
+            document.getElementById('travelerName').textContent = card.name;
+            document.getElementById('travelerTitle').textContent = card.title;
+            document.getElementById('travelerAvatar').src = card.avatar_url;
+            document.getElementById('level').textContent = card.level;
+            const xpPercentage = (card.level / 99) * 100;
+            document.getElementById('xpBar').style.width = `${xpPercentage}%`;
+            document.getElementById('raceClass').textContent = `${card.race} - ${card.class}`;
+            const startDate = new Date(card.start_date);
+            const today = new Date();
+            const diffTime = Math.abs(today - startDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            document.getElementById('startDate').textContent = `Member for ${diffDays} days`;
+            document.getElementById('visitedPlaces').textContent = card.visited_places;
+            document.getElementById('completedQuests').textContent = card.completed_quests;
+            if (card.partner) {
+                document.getElementById('partnerSection').style.display = 'flex';
+                document.getElementById('partnerName').textContent = card.partner.name;
+                document.getElementById('partnerInfo').textContent = `${card.partner.type} - Lvl ${card.partner.level}`;
+            } else {
+                 document.getElementById('partnerSection').style.display = 'none';
+            }
+            const badgesContainer = document.getElementById('badges');
+            badgesContainer.innerHTML = '';
+            const badgeIcons = ['award', 'feather', 'leaf', 'mountain', 'shield', 'star'];
+            card.badges.forEach((badge, index) => {
+                const icon = badgeIcons[index % badgeIcons.length];
+                const badgeElement = document.createElement('div');
+                badgeElement.className = 'badge p-2 rounded-full';
+                badgeElement.title = badge;
+                badgeElement.innerHTML = `<i data-lucide="${icon}" class="w-7 h-7"></i>`;
+                badgesContainer.appendChild(badgeElement);
+            });
+            document.getElementById('quote').textContent = `"${card.quote}"`;
+        }
+
+
+        // --- 拖曳事件處理 ---
+        window.dragStart = (event, attractionId) => { event.dataTransfer.setData('text/plain', attractionId); };
+        window.dragOver = (event) => { event.preventDefault(); event.currentTarget.classList.add('drag-over'); };
+        window.dragLeave = (event) => { event.currentTarget.classList.remove('drag-over'); };
+        window.drop = (event, tripId) => {
+            event.preventDefault();
+            event.currentTarget.classList.remove('drag-over');
+            const attractionId = event.dataTransfer.getData('text/plain');
+            const dayIndex = event.currentTarget.dataset.dayIndex;
+            
+            const trips = getTrips();
+            const trip = trips.find(t => t.id === tripId);
+            if (trip && !trip.days[dayIndex].attractions.includes(attractionId)) {
+                trip.days[dayIndex].attractions.push(attractionId);
+                saveTrips(trips);
+                renderPlannerView(tripId);
+            }
+        };
+        
+        function initialize() {
+            allCities = mergedData.regions.flatMap(region => region.cities.map(city => ({ id: city.id, imageUrl: getCityImage(city.id), fullData: { city, region } })));
+            worldNamePlaceholder.textContent = mergedData.world_name;
+            
+            // Link Home page avatar
+            document.getElementById('homeUserAvatar').src = guildCardData.guild_card.avatar_url;
+
+            // --- 全域事件監聽器 (修正後) ---
+            document.getElementById('app-container').addEventListener('click', (event) => {
+                const actionElement = event.target.closest('[data-action]');
+                if (!actionElement) return;
+
+                const action = actionElement.dataset.action;
+
+                if (action === 'view-location') {
+                    createDetailPage(actionElement.dataset.locationId);
+                } else if (action === 'toggle-save') {
+                    toggleSaveAttraction(actionElement.dataset.attractionId, actionElement);
+                } else if (action === 'view-explore-page') {
+                    navigateTo('explore-page');
+                } else if (action === 'create-trip') {
+                    createNewTrip();
+                } else if (action === 'view-trip-list') {
+                    renderTripListView();
+                } else if (action === 'view-trip') {
+                    navigateTo('trips-page', { tripId: actionElement.dataset.tripId });
+                }
+            });
+
+            // 底部導航事件
+            navItems.forEach(item => {
+                const pageId = item.dataset.page;
+                item.addEventListener('click', () => navigateTo(pageId));
+            });
+            
+            // --- 新增：渲染世界紀聞 ---
+            const overview = mergedData.world_overview;
+            if (overview) {
+                worldOverviewContainer.innerHTML = `
+                <h2 class="text-xl font-bold text-gray-800 mb-4 mt-8">世界紀聞</h2>
+                <div class="bg-gray-50 p-4 rounded-2xl space-y-4">
+                    <div>
+                        <h3 class="font-semibold text-gray-700">核心驅動力</h3>
+                        <p class="text-sm text-gray-600">${overview.main_driving_force}</p>
+                    </div>
+                    <div class="border-t border-gray-200 pt-3">
+                        <h3 class="font-semibold text-gray-700">共同威脅</h3>
+                        <p class="text-sm text-gray-600">${overview.common_threats_legends.common_threat}</p>
+                    </div>
+                </div>
+                `;
+            }
+
+
+            locationGrid.innerHTML = allCities.map(createLocationCard).join('');
+            lucide.createIcons();
+        }
+        document.addEventListener('DOMContentLoaded', initialize);
+    </script>
+</body>
+</html>
