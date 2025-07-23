@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>網站上線前檢查與 OpenGraph 資訊</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 自訂字體 */
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: #f0f2f5; /* 淺灰色背景 */
+            color: #333;
+        }
+        /* 容器樣式 */
+        .container {
+            max-width: 960px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        /* 區塊標題 */
+        h1, h2 {
+            font-weight: 700;
+            color: #2c3e50; /* 深藍色 */
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        /* 檢查清單項目 */
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .checklist-item:hover {
+            background-color: #f3f4f6;
+        }
+        .checklist-item input[type="checkbox"] {
+            margin-right: 12px;
+            min-width: 20px; /* 確保 checkbox 大小 */
+            min-height: 20px;
+            accent-color: #3b82f6; /* 藍色勾選框 */
+            cursor: pointer;
+        }
+        .checklist-item label {
+            flex-grow: 1;
+            cursor: pointer;
+            font-size: 1.05rem;
+            color: #4a5568;
+        }
+        .checklist-item input[type="checkbox"]:checked + label {
+            text-decoration: line-through;
+            color: #9ca3af; /* 灰色已完成文字 */
+        }
+        /* 按鈕樣式 */
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary {
+            background-color: #3b82f6; /* 藍色 */
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #2563eb;
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            background-color: #6b7280; /* 灰色 */
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #4b5563;
+            transform: translateY(-1px);
+        }
+        .btn-outline {
+            background-color: white;
+            color: #3b82f6;
+            border: 1px solid #3b82f6;
+        }
+        .btn-outline:hover {
+            background-color: #e0f2fe;
+            transform: translateY(-1px);
+        }
+
+        /* 輸入框樣式 */
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        .input-group input[type="text"],
+        .input-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .input-group input[type="text"]:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+        }
+        .input-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        /* OG 預覽樣式 */
+        .og-preview {
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            background-color: #fdfdfd;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-top: 20px;
+        }
+        .og-preview h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        .og-card {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        .og-card-image {
+            width: 100%;
+            height: 200px; /* 固定高度 */
+            background-color: #e0e0e0; /* 圖片預設背景 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+            font-size: 0.9rem;
+            overflow: hidden;
+        }
+        .og-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 確保圖片覆蓋整個區域 */
+        }
+        .og-card-content {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .og-card-site-name {
+            font-size: 0.8rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .og-card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1a202c;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .og-card-description {
+            font-size: 0.9rem;
+            color: #4a5568;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .og-card-url {
+            font-size: 0.8rem;
+            color: #3b82f6;
+            word-break: break-all;
+        }
+
+        /* 訊息框樣式 */
+        .message-box {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #4CAF50; /* 綠色 */
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            font-weight: 600;
+        }
+        .message-box.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-3xl">網站上線前檢查與 OpenGraph 資訊</h1>
+
+        <!-- 網站上線前檢查清單 -->
+        <section>
+            <h2 class="text-2xl">網站或網頁上線前檢查清單</h2>
+            <div id="checklist" class="mb-6">
+                <!-- 檢查項目將由 JavaScript 動態生成 -->
+            </div>
+            <div class="flex flex-wrap gap-3">
+                <button id="markAllDone" class="btn btn-primary">全部標記為已完成</button>
+                <button id="resetChecklist" class="btn btn-secondary">重設清單</button>
+            </div>
+        </section>
+
+        <!-- OpenGraph 資訊區塊 -->
+        <section>
+            <h2 class="text-2xl">OpenGraph (OG) 資訊</h2>
+            <p class="text-gray-700 mb-4">OpenGraph 資訊用於社群媒體分享時，控制網頁的預覽顯示方式。請務必正確填寫！</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- 輸入表單 -->
+                <div>
+                    <div class="input-group">
+                        <label for="ogTitle">og:title (標題)</label>
+                        <input type="text" id="ogTitle" placeholder="例如：我的精彩網站標題">
+                    </div>
+                    <div class="input-group">
+                        <label for="ogType">og:type (類型)</label>
+                        <input type="text" id="ogType" value="website" placeholder="例如：website, article, product...">
+                    </div>
+                    <div class="input-group">
+                        <label for="ogImage">og:image (圖片 URL)</label>
+                        <input type="text" id="ogImage" placeholder="例如：https://example.com/image.jpg">
+                    </div>
+                    <div class="input-group">
+                        <label for="ogUrl">og:url (網頁 URL)</label>
+                        <input type="text" id="ogUrl" placeholder="例如：https://example.com/page">
+                    </div>
+                    <div class="input-group">
+                        <label for="ogDescription">og:description (描述)</label>
+                        <textarea id="ogDescription" placeholder="例如：這是一個關於...的網站，提供..."></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label for="ogSiteName">og:site_name (網站名稱)</label>
+                        <input type="text" id="ogSiteName" placeholder="例如：我的公司官網">
+                    </div>
+                    <button id="copyOgTags" class="btn btn-outline w-full">複製 OG 標籤</button>
+                </div>
+
+                <!-- 預覽區塊 -->
+                <div>
+                    <div class="og-preview">
+                        <h3>OG 預覽 (模擬社群媒體分享)</h3>
+                        <div class="og-card">
+                            <div class="og-card-image" id="previewImageContainer">
+                                <img id="previewImage" src="" alt="預覽圖片" style="display: none;">
+                                <span id="imagePlaceholder">建議尺寸 1200x630px</span>
+                            </div>
+                            <div class="og-card-content">
+                                <div class="og-card-site-name" id="previewSiteName"></div>
+                                <div class="og-card-title" id="previewTitle"></div>
+                                <div class="og-card-description" id="previewDescription"></div>
+                                <div class="og-card-url" id="previewUrl"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 訊息框 -->
+    <div id="messageBox" class="message-box"></div>
+
+    <script>
+        // 檢查清單項目資料
+        const checklistItems = [
+            { id: 'content-correct', text: '所有內容是否正確且無錯字？' },
+            { id: 'links-working', text: '所有連結是否正常運作？' },
+            { id: 'forms-working', text: '表單功能是否正常？' },
+            { id: 'rwd-responsive', text: 'RWD 響應式設計是否正常？' },
+            { id: 'cross-browser', text: '跨瀏覽器相容性測試是否完成？' },
+            { id: 'title-description-set', text: '網站標題 (Title) 和描述 (Meta Description) 是否已設定？' },
+            { id: 'keywords-applied', text: '關鍵字研究是否完成並應用？' },
+            { id: 'images-optimized', text: '圖片是否已壓縮並設定 Alt Text？' },
+            { id: 'speed-optimized', text: '網站載入速度是否優化？' },
+            { id: 'analytics-installed', text: 'Google Analytics 或其他追蹤碼是否已安裝？' },
+            { id: 'ssl-installed', text: 'SSL 憑證是否已安裝？' },
+            { id: 'backup-mechanism', text: '是否有備份機制？' },
+            { id: 'privacy-policy', text: '隱私權政策和服務條款是否已發布？' },
+            { id: 'cookie-consent', text: 'Cookie 同意機制是否已實施？' },
+            { id: 'favicon-set', text: 'Favicon (網站圖示) 是否已設定？' },
+            { id: '404-page', text: '自訂 404 錯誤頁面是否已設定？' },
+            { id: 'sitemap-robots', text: 'Sitemap 和 robots.txt 是否已設定？' },
+            { id: 'social-media-links', text: '社群媒體連結是否正確？' },
+            { id: 'contact-info', text: '聯絡資訊是否正確且易於找到？' }
+        ];
+
+        // 獲取 DOM 元素
+        const checklistDiv = document.getElementById('checklist');
+        const markAllDoneBtn = document.getElementById('markAllDone');
+        const resetChecklistBtn = document.getElementById('resetChecklist');
+
+        const ogTitleInput = document.getElementById('ogTitle');
+        const ogTypeInput = document.getElementById('ogType');
+        const ogImageInput = document.getElementById('ogImage');
+        const ogUrlInput = document.getElementById('ogUrl');
+        const ogDescriptionInput = document.getElementById('ogDescription');
+        const ogSiteNameInput = document.getElementById('ogSiteName');
+        const copyOgTagsBtn = document.getElementById('copyOgTags');
+
+        const previewTitle = document.getElementById('previewTitle');
+        const previewDescription = document.getElementById('previewDescription');
+        const previewImage = document.getElementById('previewImage');
+        const previewImageContainer = document.getElementById('previewImageContainer');
+        const imagePlaceholder = document.getElementById('imagePlaceholder');
+        const previewUrl = document.getElementById('previewUrl');
+        const previewSiteName = document.getElementById('previewSiteName');
+
+        const messageBox = document.getElementById('messageBox');
+
+        /**
+         * 顯示訊息框
+         * @param {string} message - 要顯示的訊息
+         * @param {string} type - 訊息類型 (success, error, info)
+         */
+        function showMessageBox(message, type = 'success') {
+            messageBox.textContent = message;
+            messageBox.className = `message-box show`; // 重置樣式
+            if (type === 'success') {
+                messageBox.style.backgroundColor = '#4CAF50'; // 綠色
+            } else if (type === 'error') {
+                messageBox.style.backgroundColor = '#f44336'; // 紅色
+            } else {
+                messageBox.style.backgroundColor = '#2196F3'; // 藍色
+            }
+
+            setTimeout(() => {
+                messageBox.classList.remove('show');
+            }, 3000); // 3秒後隱藏
+        }
+
+        /**
+         * 載入檢查清單狀態
+         */
+        function loadChecklistState() {
+            const savedState = JSON.parse(localStorage.getItem('prelaunchChecklist')) || {};
+            checklistItems.forEach(item => {
+                const isChecked = savedState[item.id] || false;
+                const checkbox = document.getElementById(item.id);
+                if (checkbox) {
+                    checkbox.checked = isChecked;
+                }
+            });
+        }
+
+        /**
+         * 儲存檢查清單狀態
+         */
+        function saveChecklistState() {
+            const currentState = {};
+            checklistItems.forEach(item => {
+                const checkbox = document.getElementById(item.id);
+                if (checkbox) {
+                    currentState[item.id] = checkbox.checked;
+                }
+            });
+            localStorage.setItem('prelaunchChecklist', JSON.stringify(currentState));
+        }
+
+        /**
+         * 渲染檢查清單
+         */
+        function renderChecklist() {
+            checklistDiv.innerHTML = ''; // 清空現有內容
+            checklistItems.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'checklist-item';
+                itemDiv.innerHTML = `
+                    <input type="checkbox" id="${item.id}">
+                    <label for="${item.id}">${item.text}</label>
+                `;
+                checklistDiv.appendChild(itemDiv);
+
+                // 為每個 checkbox 添加事件監聽器
+                // 修正：直接使用 document.getElementById 來獲取 checkbox，避免 querySelector 的潛在問題
+                const checkbox = document.getElementById(item.id);
+                if (checkbox) { // 確保 checkbox 存在
+                    checkbox.addEventListener('change', saveChecklistState);
+                }
+            });
+            loadChecklistState(); // 渲染後載入狀態
+        }
+
+        /**
+         * 更新 OG 預覽
+         */
+        function updateOgPreview() {
+            // 獲取輸入值
+            const title = ogTitleInput.value || '請輸入標題';
+            const description = ogDescriptionInput.value || '請輸入描述';
+            const imageUrl = ogImageInput.value;
+            const url = ogUrlInput.value || 'https://example.com/your-page';
+            const siteName = ogSiteNameInput.value || '您的網站名稱';
+
+            // 更新預覽文字
+            previewTitle.textContent = title;
+            previewDescription.textContent = description;
+            previewUrl.textContent = url;
+            previewSiteName.textContent = siteName;
+
+            // 更新預覽圖片
+            if (imageUrl) {
+                previewImage.src = imageUrl;
+                previewImage.style.display = 'block';
+                imagePlaceholder.style.display = 'none';
+                previewImage.onerror = () => {
+                    previewImage.style.display = 'none';
+                    imagePlaceholder.style.display = 'flex'; // 顯示佔位符
+                    imagePlaceholder.textContent = '圖片載入失敗或無效 URL';
+                    previewImageContainer.style.backgroundColor = '#f8d7da'; /* 錯誤背景色 */
+                    previewImageContainer.style.color = '#721c24'; /* 錯誤文字色 */
+                };
+                previewImage.onload = () => {
+                    previewImageContainer.style.backgroundColor = '#e0e0e0'; /* 重置背景色 */
+                    imagePlaceholder.textContent = '建議尺寸 1200x630px'; // 重置佔位符文字
+                };
+            } else {
+                previewImage.style.display = 'none';
+                imagePlaceholder.style.display = 'flex';
+                imagePlaceholder.textContent = '建議尺寸 1200x630px';
+                previewImageContainer.style.backgroundColor = '#e0e0e0'; /* 重置背景色 */
+                previewImageContainer.style.color = '#6b7280'; /* 重置文字色 */
+            }
+        }
+
+        /**
+         * 複製 OG 標籤到剪貼簿
+         */
+        function copyOgTags() {
+            const title = ogTitleInput.value;
+            const type = ogTypeInput.value;
+            const image = ogImageInput.value;
+            const url = ogUrlInput.value;
+            const description = ogDescriptionInput.value;
+            const siteName = ogSiteNameInput.value;
+
+            let ogTags = '';
+            if (title) ogTags += `<meta property="og:title" content="${title}" />\n`;
+            if (type) ogTags += `<meta property="og:type" content="${type}" />\n`;
+            if (image) ogTags += `<meta property="og:image" content="${image}" />\n`;
+            if (url) ogTags += `<meta property="og:url" content="${url}" />\n`;
+            if (description) ogTags += `<meta property="og:description" content="${description}" />\n`;
+            if (siteName) ogTags += `<meta property="og:site_name" content="${siteName}" />\n`;
+
+            if (!ogTags) {
+                showMessageBox('沒有可複製的 OpenGraph 標籤，請先填寫資訊。', 'error');
+                return;
+            }
+
+            // 使用 document.execCommand('copy') 複製文字
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = ogTags;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showMessageBox('OpenGraph 標籤已複製到剪貼簿！');
+                } else {
+                    showMessageBox('複製失敗，請手動複製。', 'error');
+                }
+            } catch (err) {
+                showMessageBox('複製失敗，請手動複製。', 'error');
+            }
+            document.body.removeChild(tempTextArea);
+        }
+
+        // --- 事件監聽器 ---
+
+        // 頁面載入完成後執行
+        window.onload = function() {
+            renderChecklist();
+            updateOgPreview(); // 初始化 OG 預覽
+        };
+
+        // 檢查清單按鈕事件
+        markAllDoneBtn.addEventListener('click', () => {
+            checklistItems.forEach(item => {
+                const checkbox = document.getElementById(item.id);
+                if (checkbox) {
+                    checkbox.checked = true;
+                }
+            });
+            saveChecklistState();
+            showMessageBox('所有檢查項目已標記為完成！');
+        });
+
+        resetChecklistBtn.addEventListener('click', () => {
+            checklistItems.forEach(item => {
+                const checkbox = document.getElementById(item.id);
+                if (checkbox) {
+                    checkbox.checked = false;
+                }
+            });
+            saveChecklistState();
+            showMessageBox('檢查清單已重設！');
+        });
+
+        // OG 輸入框事件監聽器 (即時更新預覽)
+        ogTitleInput.addEventListener('input', updateOgPreview);
+        ogTypeInput.addEventListener('input', updateOgPreview);
+        ogImageInput.addEventListener('input', updateOgPreview);
+        ogUrlInput.addEventListener('input', updateOgPreview);
+        ogDescriptionInput.addEventListener('input', updateOgPreview);
+        ogSiteNameInput.addEventListener('input', updateOgPreview);
+
+        // 複製 OG 標籤按鈕事件
+        copyOgTagsBtn.addEventListener('click', copyOgTags);
+
+    </script>
+</body>
+</html>
