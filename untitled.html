@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>海嘯觀測多頻道直播</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", "微軟正黑體", sans-serif;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background-color: transparent;
+      overflow: hidden;
+    }
+
+    .container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .overlay-bar {
+      flex: 0 0 60px;
+      width: 100%;
+      padding: 10px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to right, rgba(0, 48, 73, 0.7), rgba(0, 117, 162, 0.3));
+      color: white;
+      z-index: 10;
+    }
+
+    .title {
+      font-size: 24px;
+      font-weight: bold;
+      text-shadow: 1px 1px 3px #000;
+      display: flex;
+      align-items: center;
+    }
+
+    .title::before {
+      content: "";
+      margin-right: 10px;
+    }
+
+    .clock {
+      font-size: 18px;
+      font-family: monospace;
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    .grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 5px;
+      background-color: #000;
+    }
+
+    .feed-box {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .feed-box iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .feed-title {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 6px 12px;
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px #000;
+      z-index: 5;
+    }
+
+    .watermark {
+      position: absolute;
+      bottom: 10px;
+      right: 20px;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.85);
+      text-shadow: 1px 1px 2px #000;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- 主標題與時鐘 -->
+    <div class="overlay-bar">
+      <div class="title">海嘯觀測｜東部海岸國家風景區管理處</div>
+      <div class="clock" id="clock">--:--:--</div>
+    </div>
+
+    <!-- 直播畫面網格 -->
+    <div class="grid">
+      <div class="feed-box">
+        <div class="feed-title">綠島柴口 | 台東</div>
+        <iframe src="https://www.youtube.com/embed/a8nJQr5rBGs?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+      </div>
+      <div class="feed-box">
+        <div class="feed-title">石梯坪 | 花蓮</div>
+        <iframe src="https://www.youtube.com/embed/mXnigLvIL0Q?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+      </div>
+      <div class="feed-box">
+        <div class="feed-title">大石鼻山 | 花蓮</div>
+        <iframe src="https://www.youtube.com/embed/JkoXcXI04Qk?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+      </div>
+      <div class="feed-box">
+        <div class="feed-title">三仙台 | 台東</div>
+        <iframe src="https://www.youtube.com/embed/dQ7Sd6PGLdA?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+      </div>
+      <div class="feed-box">
+        <div class="feed-title">金樽遊憩區 | 台東</div>
+        <iframe src="https://www.youtube.com/embed/ZdqHgQwvZOw?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+      </div>
+      <div class="feed-box">
+        <div class="feed-title">綠島南寮漁港 | 台東</div>
+        <iframe src="https://www.youtube.com/embed/wTHhv7M0vCI?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+      </div>
+    </div>
+
+    <!-- 資料來源浮水印 -->
+    <div class="watermark">資料來源：交通部中央氣象署</div>
+  </div>
+
+  <!-- 即時時鐘 -->
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const timeString = now.toLocaleTimeString('zh-TW', { hour12: false });
+      document.getElementById('clock').textContent = timeString;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body>
+</html>
