@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>金流小帳本 Pro</title>
+  <!-- PWA and Theme Setup -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#4caf50" />
+  <link rel="icon" href="icon.png" type="image/png">
+  <style>
+    /* CSS Variables for theming */
+    :root {
+      --primary: #4caf50;
+      --danger: #f44336;
+      --info: #2196f3;
+      --warning: #ff9800;
+      --grey: #9e9e9e;
+      --light-grey: #f0f4f8;
+      --white: #ffffff;
+      --text: #333;
+      --shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    /* General Body and Layout Styles */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--light-grey);
+      color: var(--text);
+      margin: 0;
+      padding: 1rem;
+    }
+    .container {
+      max-width: 640px;
+      margin: auto;
+    }
+
+    /* Typography */
+    h1 {
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+
+    /* Form Styling */
+    form {
+      background: var(--white);
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 0.75rem;
+      margin: 0.5rem 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      box-sizing: border-box;
+      transition: all 0.2s ease;
+    }
+    input:focus, select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+      outline: none;
+    }
+    button {
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      opacity: 0.85;
+      transform: translateY(-1px);
+    }
+    .form-buttons {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    .form-buttons button {
+      flex-grow: 1;
+    }
+    .form-buttons button.cancel-edit {
+      background: var(--grey);
+    }
+
+    /* Summary Section */
+    .summary {
+      display: flex;
+      justify-content: space-around;
+      background: var(--white);
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    .summary-item {
+      flex: 1;
+    }
+    .summary-item h3 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1rem;
+      color: #555;
+    }
+    .summary-item p {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    .summary-item .credit { color: var(--primary); }
+    .summary-item .owe { color: var(--danger); }
+
+    /* Record List Styling */
+    .record {
+      background: var(--white);
+      margin: 1rem 0;
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      border-left: 6px solid;
+      transition: all 0.2s ease;
+    }
+    .record.credit { border-color: var(--primary); }
+    .record.owe { border-color: var(--danger); }
+    .record.settled {
+      border-color: var(--grey);
+      background: #fafafa;
+      opacity: 0.8;
+    }
+    .record.settled .record-header, .record.settled .record-footer {
+      text-decoration: line-through;
+    }
+    .record-header, .record-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .record-header {
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+    .record-header span:last-child {
+      font-weight: bold;
+    }
+    .record-footer {
+      color: #666;
+      font-size: 0.9rem;
+    }
+    .actions {
+      text-align: right;
+      margin-top: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+    }
+    .actions button {
+      width: auto;
+      padding: 0.4rem 0.8rem;
+      font-size: 0.85rem;
+      border-radius: 6px;
+    }
+    .actions .action-edit { background: var(--info); }
+    .actions .action-delete { background: var(--danger); }
+    .actions .action-paid { background: var(--primary); }
+    .actions .action-unpaid { background: var(--warning); }
+
+    /* Custom Modal Styling */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .modal-overlay.visible {
+      opacity: 1;
+    }
+    .modal-content {
+      background: var(--white);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      text-align: center;
+      max-width: 320px;
+      width: 90%;
+      transform: scale(0.9);
+      transition: transform 0.2s ease;
+    }
+    .modal-overlay.visible .modal-content {
+      transform: scale(1);
+    }
+    .modal-content p {
+      margin: 0 0 1.5rem 0;
+      font-size: 1.1rem;
+      line-height: 1.5;
+    }
+    .modal-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .modal-buttons button {
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>金流小帳本 Pro</h1>
+
+    <!-- Form for adding/editing records -->
+    <form id="debtForm">
+      <select id="type">
+        <option value="theyOweMe">對方欠我</option>
+        <option value="iOweThem">我欠對方</option>
+      </select>
+      <input type="text" id="name" placeholder="姓名 (例如: 同事A)" required />
+      <input type="number" id="amount" placeholder="金額 (NT$)" required min="1" />
+      <input type="text" id="reason" placeholder="原因 (例如: 午餐、代墊)" />
+      <div class="form-buttons">
+        <button type="submit" id="submitButton">➕ 新增紀錄</button>
+        <button type="button" id="cancelEditButton" class="cancel-edit" style="display: none;">❌ 取消編輯</button>
+      </div>
+    </form>
+
+    <!-- Summary Section -->
+    <div id="summarySection" class="summary"></div>
+
+    <!-- List of Records -->
+    <div id="recordList"></div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // DOM Elements
+      const form = document.getElementById('debtForm');
+      const recordList = document.getElementById('recordList');
+      const summarySection = document.getElementById('summarySection');
+      const typeSelect = document.getElementById('type');
+      const nameInput = document.getElementById('name');
+      const amountInput = document.getElementById('amount');
+      const reasonInput = document.getElementById('reason');
+      const submitButton = document.getElementById('submitButton');
+      const cancelEditButton = document.getElementById('cancelEditButton');
+
+      // State
+      let debts = JSON.parse(localStorage.getItem('debts_v2') || '[]').map(debt => ({
+        ...debt,
+        status: debt.status || 'unpaid',
+        datePaid: debt.datePaid || null,
+        id: debt.id || Date.now() + Math.random() // Assign ID to old data
+      }));
+      let editingId = null;
+
+      // --- Core Functions ---
+
+      /**
+       * Saves the current state to localStorage.
+       */
+      const save = () => {
+        localStorage.setItem('debts_v2', JSON.stringify(debts));
+      };
+
+      /**
+       * Renders all records and the summary.
+       */
+      const render = () => {
+        renderRecords();
+        renderSummary();
+      };
+
+      /**
+       * Renders the summary section.
+       */
+      const renderSummary = () => {
+        const unpaidDebts = debts.filter(d => d.status === 'unpaid');
+        const totalCredit = unpaidDebts
+          .filter(d => d.type === 'theyOweMe')
+          .reduce((sum, d) => sum + d.amount, 0);
+        const totalOwe = unpaidDebts
+          .filter(d => d.type === 'iOweThem')
+          .reduce((sum, d) => sum + d.amount, 0);
+
+        summarySection.innerHTML = `
+          <div class="summary-item">
+            <h3>待收回</h3>
+            <p class="credit">NT$ ${totalCredit}</p>
+          </div>
+          <div class="summary-item">
+            <h3>待償還</h3>
+            <p class="owe">NT$ ${totalOwe}</p>
+          </div>
+        `;
+      };
+
+      /**
+       * Renders all records to the list.
+       */
+      const renderRecords = () => {
+        recordList.innerHTML = ''; // Clear existing list
+        
+        // Sort records: unpaid first, then by date
+        const sortedDebts = [...debts].sort((a, b) => {
+            if (a.status === 'unpaid' && b.status === 'paid') return -1;
+            if (a.status === 'paid' && b.status === 'unpaid') return 1;
+            return new Date(b.date) - new Date(a.date);
+        });
+
+        if (sortedDebts.length === 0) {
+            recordList.innerHTML = '<p style="text-align:center; color: #888;">目前沒有任何紀錄。</p>';
+            return;
+        }
+
+        sortedDebts.forEach(debt => {
+          const div = document.createElement('div');
+          let headerText;
+          let className = 'record';
+
+          if (debt.status === 'paid') {
+            className += ' settled';
+            const paidDate = debt.datePaid || debt.date;
+            headerText = debt.type === 'theyOweMe'
+              ? `${debt.name} 已還款 <span style="font-size:0.8em; color:#777">(${paidDate})</span>`
+              : `我已還款給 ${debt.name} <span style="font-size:0.8em; color:#777">(${paidDate})</span>`;
+          } else {
+            className += debt.type === 'theyOweMe' ? ' credit' : ' owe';
+            headerText = debt.type === 'theyOweMe'
+              ? `${debt.name} 尚欠我`
+              : `我尚欠 ${debt.name}`;
+          }
+          div.className = className;
+          div.dataset.id = debt.id;
+
+          div.innerHTML = `
+            <div class="record-header">
+              <span>${headerText}</span>
+              <span>NT$ ${debt.amount}</span>
+            </div>
+            <div class="record-footer">
+              <span>${debt.reason || '—'}</span>
+              <span>${debt.date}</span>
+            </div>
+            <div class="actions">
+              <button data-action="edit" class="action-edit">✏️ 編輯</button>
+              ${debt.status === 'unpaid'
+                ? `<button data-action="paid" class="action-paid">✅ 已還款</button>`
+                : `<button data-action="unpaid" class="action-unpaid">↩️ 取消還款</button>`
+              }
+              <button data-action="delete" class="action-delete">🗑️ 刪除</button>
+            </div>
+          `;
+          recordList.appendChild(div);
+        });
+      };
+
+      // --- Event Handlers ---
+
+      /**
+       * Handles form submission for adding or updating a record.
+       */
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        const type = typeSelect.value;
+        const name = nameInput.value.trim();
+        const amount = parseFloat(amountInput.value);
+        const reason = reasonInput.value.trim();
+
+        if (!name || isNaN(amount) || amount <= 0) {
+          showModal('請輸入有效的姓名和正數金額！');
+          return;
+        }
+
+        if (editingId) {
+          // Update existing record
+          const debt = debts.find(d => d.id === editingId);
+          if (debt) {
+            debt.type = type;
+            debt.name = name;
+            debt.amount = amount;
+            debt.reason = reason;
+          }
+        } else {
+          // Add new record
+          const newDebt = {
+            id: Date.now(),
+            type, name, amount, reason,
+            date: new Date().toISOString().slice(0, 10),
+            status: 'unpaid',
+            datePaid: null
+          };
+          debts.push(newDebt);
+        }
+
+        save();
+        render();
+        exitEditMode();
+      });
+
+      /**
+       * Uses event delegation to handle clicks on record actions.
+       */
+      recordList.addEventListener('click', e => {
+        const target = e.target.closest('button');
+        if (!target) return;
+
+        const action = target.dataset.action;
+        const recordDiv = target.closest('.record');
+        const id = parseFloat(recordDiv.dataset.id);
+
+        switch (action) {
+          case 'edit':
+            enterEditMode(id);
+            break;
+          case 'paid':
+            togglePaidStatus(id, true);
+            break;
+          case 'unpaid':
+            togglePaidStatus(id, false);
+            break;
+          case 'delete':
+            deleteRecord(id);
+            break;
+        }
+      });
+
+      /**
+       * Handles cancel edit button click.
+       */
+      cancelEditButton.addEventListener('click', exitEditMode);
+
+      // --- Action Functions ---
+
+      /**
+       * Enters edit mode for a specific record.
+       * @param {number} id - The ID of the record to edit.
+       */
+      const enterEditMode = (id) => {
+        const debt = debts.find(d => d.id === id);
+        if (!debt) return;
+
+        editingId = id;
+        typeSelect.value = debt.type;
+        nameInput.value = debt.name;
+        amountInput.value = debt.amount;
+        reasonInput.value = debt.reason;
+
+        submitButton.textContent = '✅ 更新紀錄';
+        cancelEditButton.style.display = 'inline-block';
+        form.scrollIntoView({ behavior: 'smooth' });
+      };
+
+      /**
+       * Exits edit mode and resets the form.
+       */
+      function exitEditMode() {
+        editingId = null;
+        form.reset();
+        submitButton.textContent = '➕ 新增紀錄';
+        cancelEditButton.style.display = 'none';
+      }
+
+      /**
+       * Toggles the paid status of a record.
+       * @param {number} id - The ID of the record.
+       * @param {boolean} isPaid - True to mark as paid, false to mark as unpaid.
+       */
+      const togglePaidStatus = async (id, isPaid) => {
+        const message = isPaid
+          ? '確定這筆款項已結清嗎？'
+          : '確定要將這筆款項恢復為未付款狀態嗎？';
+        const confirmed = await showConfirm(message);
+        if (confirmed) {
+          const debt = debts.find(d => d.id === id);
+          if (debt) {
+            debt.status = isPaid ? 'paid' : 'unpaid';
+            debt.datePaid = isPaid ? new Date().toISOString().slice(0, 10) : null;
+            save();
+            render();
+          }
+        }
+      };
+
+      /**
+       * Deletes a record after confirmation.
+       * @param {number} id - The ID of the record to delete.
+       */
+      const deleteRecord = async (id) => {
+        const confirmed = await showConfirm('確定要永久刪除這筆紀錄嗎？');
+        if (confirmed) {
+          debts = debts.filter(d => d.id !== id);
+          save();
+          render();
+        }
+      };
+
+      // --- Custom Modal Functions ---
+
+      /**
+       * Shows a custom alert-style modal.
+       * @param {string} message - The message to display.
+       */
+      const showModal = (message) => {
+        const modal = createModal(message, false);
+        document.body.appendChild(modal);
+        // Make it visible with transition
+        setTimeout(() => modal.classList.add('visible'), 10);
+      };
+
+      /**
+       * Shows a custom confirm-style modal.
+       * @param {string} message - The confirmation message.
+       * @returns {Promise<boolean>} - A promise that resolves to true or false.
+       */
+      const showConfirm = (message) => {
+        return new Promise(resolve => {
+          const modal = createModal(message, true, resolve);
+          document.body.appendChild(modal);
+          setTimeout(() => modal.classList.add('visible'), 10);
+        });
+      };
+
+      /**
+       * Creates the modal element.
+       * @param {string} message - The message to display.
+       * @param {boolean} isConfirm - Whether to show confirm buttons.
+       * @param {function} resolve - The promise resolve function for confirm.
+       */
+      const createModal = (message, isConfirm, resolve) => {
+        const overlay = document.createElement('div');
+        overlay.className = 'modal-overlay';
+
+        const content = document.createElement('div');
+        content.className = 'modal-content';
+
+        content.innerHTML = `<p>${message}</p>`;
+        
+        const buttonsDiv = document.createElement('div');
+        buttonsDiv.className = 'modal-buttons';
+
+        const close = () => {
+          overlay.classList.remove('visible');
+          overlay.addEventListener('transitionend', () => overlay.remove());
+        };
+
+        if (isConfirm) {
+          const yesBtn = document.createElement('button');
+          yesBtn.textContent = '確定';
+          yesBtn.onclick = () => { close(); resolve(true); };
+
+          const noBtn = document.createElement('button');
+          noBtn.textContent = '取消';
+          noBtn.style.background = 'var(--grey)';
+          noBtn.onclick = () => { close(); resolve(false); };
+          
+          buttonsDiv.append(noBtn, yesBtn);
+        } else {
+          const okBtn = document.createElement('button');
+          okBtn.textContent = '好的';
+          okBtn.onclick = close;
+          buttonsDiv.appendChild(okBtn);
+        }
+        
+        content.appendChild(buttonsDiv);
+        overlay.appendChild(content);
+        return overlay;
+      };
+
+      // --- PWA Service Worker ---
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('service-worker.js')
+            .then(reg => console.log('Service Worker 註冊成功:', reg.scope))
+            .catch(err => console.warn('Service Worker 註冊失敗:', err));
+        });
+      }
+
+      // Initial Render
+      render();
+    });
+  </script>
+</body>
+</html>
