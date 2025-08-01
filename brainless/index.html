@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>東京五天四夜・互動旅遊指南 (神級保姆版)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .hero-bg {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+        .nav-item {
+            transition: color 0.2s, border-color 0.2s;
+        }
+        .nav-item:hover, .nav-item.active {
+            color: #ef4444; /* Red-500 */
+            border-bottom-color: #ef4444;
+        }
+        .action-box {
+            background-color: #f0f9ff; /* sky-50 */
+            border: 1px solid #bae6fd; /* sky-200 */
+        }
+        .dialogue-box {
+            background-color: #f1f5f9; /* slate-100 */
+            border-left: 4px solid #64748b; /* slate-500 */
+            font-style: italic;
+        }
+        .meal-card {
+            background-color: #fff;
+            border: 2px solid #fca5a5; /* red-300 */
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+        .meal-card img {
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+        .qr-code {
+            border: 4px solid #fff;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Header Section -->
+    <header class="hero-bg text-white shadow-lg">
+        <div class="container mx-auto px-6 py-20 text-center">
+            <h1 class="text-4xl md:text-5xl font-black tracking-tight mb-4">東京五天四夜自由行指南</h1>
+            <p class="text-xl md:text-2xl text-yellow-300 font-bold">【神級保姆版】</p>
+            <p class="text-md mt-2">您的任務：呼吸，以及滑手機。</p>
+        </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-center items-center space-x-4 sm:space-x-6 md:space-x-8 overflow-x-auto py-3">
+                <a href="#panic" class="nav-item text-red-600 font-bold border-b-2 border-transparent pb-1 whitespace-nowrap">緊急求生</a>
+                <a href="#day1" class="nav-item text-gray-600 font-semibold border-b-2 border-transparent pb-1 whitespace-nowrap">Day 1</a>
+                <a href="#day2" class="nav-item text-gray-600 font-semibold border-b-2 border-transparent pb-1 whitespace-nowrap">Day 2</a>
+                <a href="#day3" class="nav-item text-gray-600 font-semibold border-b-2 border-transparent pb-1 whitespace-nowrap">Day 3</a>
+                <a href="#day4" class="nav-item text-gray-600 font-semibold border-b-2 border-transparent pb-1 whitespace-nowrap">Day 4</a>
+                <a href="#day5" class="nav-item text-gray-600 font-semibold border-b-2 border-transparent pb-1 whitespace-nowrap">Day 5</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 md:p-8">
+
+        <!-- Panic Button Section -->
+        <section id="panic" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-8 text-red-700 flex items-center justify-center"><i data-lucide="shield-alert" class="w-8 h-8 mr-3"></i>緊急求生手冊</h2>
+            <div class="bg-white rounded-xl shadow-lg p-6 space-y-4">
+                 <p class="text-center text-gray-600">別怕，把手機橫過來，把下面這張圖給任何一個穿制服的人看。</p>
+                <div class="bg-red-600 text-white p-6 rounded-lg text-center">
+                    <h3 class="text-3xl font-black">助けてください</h3>
+                    <p class="text-lg mt-2">(tasukete kudasai)</p>
+                    <p class="mt-4 text-xl font-bold">迷子になりました。駅に行きたいです。</p>
+                    <p>(我迷路了，想去車站。)</p>
+                </div>
+                 <div class="action-box p-4 rounded-lg mt-4">
+                    <h4 class="font-bold flex items-center"><i data-lucide="contact" class="w-5 h-5 mr-2"></i>重要聯絡資訊</h4>
+                    <p class="mt-2"><strong>駐日代表處電話：</strong> 03-3280-7811</p>
+                    <p><strong>緊急聯絡電話(旅外國人)：</strong> 080-6557-8796</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Detailed Itinerary -->
+        <div class="space-y-16">
+            <!-- Day 1 -->
+            <section id="day1" class="pt-16 -mt-16">
+                <h2 class="text-3xl font-bold mb-6 flex items-center"><span class="bg-red-500 text-white rounded-full w-10 h-10 flex items-center justify-center mr-4">1</span>抵達東京・淺草風情</h2>
+                <div class="bg-white rounded-xl shadow-lg p-6 space-y-8">
+                    <div class="action-box p-6 rounded-lg">
+                        <h4 class="font-bold text-xl flex items-center mb-4"><i data-lucide="plane-landing" class="w-6 h-6 mr-3 text-sky-500"></i>第一步：出機場</h4>
+                        <ol class="list-decimal list-inside space-y-3 text-sky-800">
+                            <li>跟著人群走，看到「到着」就對了。</li>
+                            <li>在入境櫃檯，把護照給他。</li>
+                            <li>拿完行李，跟著「鉄道」指標搭手扶梯下樓到B1。</li>
+                            <li>找到<strong class="text-blue-600">藍色招牌的「Keisei京成電鐵」</strong>，把下面這張圖給櫃檯看：
+                                <div class="bg-white p-4 my-2 border-2 border-dashed border-sky-400 rounded-md text-center">
+                                    <p class="text-lg font-bold text-black">スカイライナー、上野まで、大人2枚</p>
+                                    <p class="text-lg font-bold text-black">Suicaも2枚ください</p>
+                                </div>
+                            </li>
+                            <li>付錢，拿票，搭車。結束。</li>
+                        </ol>
+                    </div>
+
+                    <div class="action-box p-6 rounded-lg">
+                        <h4 class="font-bold text-xl flex items-center mb-4"><i data-lucide="landmark" class="w-6 h-6 mr-3 text-sky-500"></i>第二步：淺草 & 晴空塔</h4>
+                         <ol class="list-decimal list-inside space-y-3 text-sky-800">
+                            <li>到飯店丟包後，用手機掃這個QR Code，跟著Google Map走到<strong class="text-orange-500">地鐵銀座線「上野站」</strong>。
+                                <div class="text-center my-2"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://maps.app.goo.gl/T4jY6jX5c8xYp8eC7" alt="QR Code for Ueno Station" class="inline-block qr-code"></div>
+                            </li>
+                            <li>搭往「淺草」方向，3站後下車，從<strong class="text-red-600">1號出口</strong>出去就是雷門。</li>
+                            <li>逛完淺草寺，掃這個QR Code，跟著走到<strong class="text-purple-500">東武晴空塔線「淺草站」</strong>，搭1站就到晴空塔。
+                                 <div class="text-center my-2"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://maps.app.goo.gl/9qW1wzJz4t4oYJvE7" alt="QR Code for Tobu Asakusa Station" class="inline-block qr-code"></div>
+                            </li>
+                         </ol>
+                    </div>
+
+                    <div class="action-box p-6 rounded-lg">
+                        <h4 class="font-bold text-xl flex items-center mb-4"><i data-lucide="utensils-crossed" class="w-6 h-6 mr-3 text-sky-500"></i>第三步：晚餐時間</h4>
+                        <p class="text-sky-800">到晴空塔6樓，找到「六厘舍」。把下面這張圖給店員看，他就會引導你去機器買票。</p>
+                        <div class="meal-card mt-4">
+                            <img src="https://placehold.co/400x250/fca5a5/ffffff?text=Tsukemen+(Dipping+Noodles)" alt="沾麵示意圖" class="w-full h-auto object-cover">
+                            <h5 class="text-xl font-bold">得製つけめん</h5>
+                            <p class="text-gray-500">(Tokusei Tsukemen)</p>
+                            <p class="mt-2 font-semibold">招牌沾麵，全部配料都有</p>
+                            <p class="mt-2 text-2xl font-black text-red-600">これを2つください</p>
+                            <p class="text-gray-500">(kore o futatsu kudasai / 這個請給我兩個)</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Day 2 -->
+            <section id="day2" class="pt-16 -mt-16">
+                 <h2 class="text-3xl font-bold mb-6 flex items-center"><span class="bg-green-500 text-white rounded-full w-10 h-10 flex items-center justify-center mr-4">2</span>上野公園・秋葉原</h2>
+                <div class="bg-white rounded-xl shadow-lg p-6 space-y-8">
+                    <div class="action-box p-6 rounded-lg">
+                        <h4 class="font-bold text-xl flex items-center mb-4"><i data-lucide="shopping-cart" class="w-6 h-6 mr-3 text-sky-500"></i>第一步：上野公園 & 午餐</h4>
+                        <p class="text-sky-800 mb-4">早上睡到自然醒，然後掃QR Code，走路去上野公園和阿美橫丁。</p>
+                        <div class="text-center my-2"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://maps.app.goo.gl/kG1gE8T9vXbCqH8p7" alt="QR Code for Ameya Yokocho" class="inline-block qr-code"></div>
+                        <p class="text-sky-800">午餐吃這個，找到「肉の大山」，把圖給他看，用手指比數量。</p>
+                         <div class="meal-card mt-4">
+                            <img src="https://placehold.co/400x250/fde68a/422006?text=Menchi-katsu" alt="炸肉餅示意圖" class="w-full h-auto object-cover">
+                            <h5 class="text-xl font-bold">やみつきメンチ</h5>
+                            <p class="text-gray-500">(Yamitsuki Menchi)</p>
+                            <p class="mt-2 font-semibold">會上癮的炸肉餅</p>
+                        </div>
+                    </div>
+                    <div class="action-box p-6 rounded-lg">
+                        <h4 class="font-bold text-xl flex items-center mb-4"><i data-lucide="gamepad-2" class="w-6 h-6 mr-3 text-sky-500"></i>第二步：秋葉原 & 晚餐</h4>
+                        <ol class="list-decimal list-inside space-y-3 text-sky-800">
+                            <li>到<strong class="text-gray-500">JR「上野站」</strong>搭<strong class="text-gray-500">山手線(綠色)</strong>2站到「秋葉原站」。</li>
+                            <li>從「電氣街口」出來，掃QR Code去扭蛋會館。
+                                 <div class="text-center my-2"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://maps.app.goo.gl/oTfS2s11eG5vSgqP7" alt="QR Code for Gachapon Kaikan" class="inline-block qr-code"></div>
+                            </li>
+                            <li>晚餐吃「九州じゃんがららーめん」，把圖給他看。</li>
+                        </ol>
+                         <div class="meal-card mt-4">
+                            <img src="https://placehold.co/400x250/86efac/422006?text=Kyushu+Jangara+Ramen" alt="拉麵示意圖" class="w-full h-auto object-cover">
+                            <h5 class="text-xl font-bold">九州じゃんがら</h5>
+                            <p class="text-gray-500">(Kyushu Jangara)</p>
+                            <p class="mt-2 font-semibold">招牌拉麵</p>
+                             <p class="mt-2 text-2xl font-black text-red-600">これを2つください</p>
+                            <p class="text-gray-500">(kore o futatsu kudasai / 這個請給我兩個)</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Day 3, 4, 5 would be expanded with the same level of detail -->
+            <section id="day3" class="pt-16 -mt-16">
+                <h2 class="text-3xl font-bold mb-6 flex items-center"><span class="bg-pink-500 text-white rounded-full w-10 h-10 flex items-center justify-center mr-4">3</span>原宿・涉谷</h2>
+                <div class="bg-white rounded-xl shadow-lg p-6 space-y-4">
+                    <p class="text-center font-semibold text-gray-500">(此處將比照前兩日，提供QR Code地圖、點餐圖卡等保姆級指示)</p>
+                    <div class="action-box p-6 rounded-lg">
+                        <h4 class="font-bold text-xl flex items-center mb-4"><i data-lucide="map-pin" class="w-6 h-6 mr-3 text-sky-500"></i>本日路線：搭JR山手線到「原宿站」-> 明治神宮 -> 竹下通 -> 表參道 -> 涉谷十字路口 -> SHIBUYA SKY</h4>
+                        <p class="mt-4 text-sky-800">晚餐吃一蘭拉麵，把這張圖給店員看，他會教你怎麼用機器。</p>
+                        <div class="meal-card mt-4">
+                            <img src="https://placehold.co/400x250/ef4444/ffffff?text=Ichiran+Ramen" alt="一蘭拉麵示意圖" class="w-full h-auto object-cover">
+                             <h5 class="text-xl font-bold">天然とんこつラーメン</h5>
+                            <p class="text-gray-500">(Tennen Tonkotsu Ramen)</p>
+                            <p class="mt-2 font-semibold">經典豚骨拉麵</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="day4" class="pt-16 -mt-16">
+                <h2 class="text-3xl font-bold mb-6 flex items-center"><span class="bg-blue-500 text-white rounded-full w-10 h-10 flex items-center justify-center mr-4">4</span>新宿・雙塔夜景</h2>
+                <div class="bg-white rounded-xl shadow-lg p-6 space-y-4">
+                    <p class="text-center font-semibold text-gray-500">(此處將比照前兩日，提供QR Code地圖、點餐圖卡等保姆級指示)</p>
+                     <div class="action-box p-6 rounded-lg">
+                        <h4 class="font-bold text-xl flex items-center mb-4"><i data-lucide="map-pin" class="w-6 h-6 mr-3 text-sky-500"></i>本日路線：新宿逛街 -> 東京鐵塔 -> 六本木Hills</h4>
+                        <p class="mt-4 text-sky-800">午餐去高島屋百貨13樓找「美登利壽司」，直接指著壽司師傅前面的魚料點餐。</p>
+                        <p class="mt-4 text-sky-800">晚餐去六本木吃「AFURI」，把這張圖給店員看。</p>
+                        <div class="meal-card mt-4">
+                            <img src="https://placehold.co/400x250/a3e635/000000?text=AFURI+Yuzu+Ramen" alt="AFURI拉麵示意圖" class="w-full h-auto object-cover">
+                             <h5 class="text-xl font-bold">柚子塩らーめん</h5>
+                            <p class="text-gray-500">(Yuzu Shio Ramen)</p>
+                            <p class="mt-2 font-semibold">柚子鹽味拉麵</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="day5" class="pt-16 -mt-16">
+                <h2 class="text-3xl font-bold mb-6 flex items-center"><span class="bg-gray-500 text-white rounded-full w-10 h-10 flex items-center justify-center mr-4">5</span>回家</h2>
+                <div class="bg-white rounded-xl shadow-lg p-6 space-y-4">
+                     <div class="action-box p-6 rounded-lg">
+                        <h4 class="font-bold text-xl flex items-center mb-4"><i data-lucide="plane-takeoff" class="w-6 h-6 mr-3 text-sky-500"></i>最終任務：去機場</h4>
+                        <ol class="list-decimal list-inside space-y-3 text-sky-800">
+                            <li>睡到開心，去飯店櫃檯說「Check-out」。</li>
+                            <li>掃QR Code，搭Skyliner去成田機場。
+                                <div class="text-center my-2"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://maps.app.goo.gl/9DqZ7X9jW4rY8bA6A" alt="QR Code to Keisei-Ueno Station" class="inline-block qr-code"></div>
+                            </li>
+                            <li><strong class="text-red-600">看好機票，確認是第1、2、3哪個航廈。</strong></li>
+                            <li>入關後，看到「DUTY FREE」就進去買伴手禮。</li>
+                            <li>找到登機門，坐下，滑手機，等上飛機。任務完成。</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-16">
+        <div class="container mx-auto p-6 text-center">
+            <p class="font-bold text-lg">恭喜破關！</p>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+
+</body>
+</html>
