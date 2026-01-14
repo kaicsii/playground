@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>桃園自由行行程｜3日2夜慢活、親子放電、週末快閃、情侶必去 (2024更新)</title>
+    <meta name="description" content="精選5條桃園旅遊路線：3日2夜慢活遊、週末快閃Shopping、親子放電好去處、情侶浪漫打卡、文青老街遊。已根據午去午回航班優化時間，附Google Maps導航。">
+    <meta name="keywords" content="3日2夜, 2日1夜, 週末快閃, 台灣親子遊, 情侶好去處, 桃園景點, 華泰名品城, Xpark, 大溪老街">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Noto Sans TC"', 'sans-serif'] },
+                    colors: {
+                        ty: { light: '#E0F7FA', main: '#00838F', dark: '#006064', accent: '#FF7043', bg: '#F9FAFB' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+         .scrollbar-hide::-webkit-scrollbar { display: none; }
+         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+         .tab-active { background-color: #00838F; color: white; border-color: #00838F; }
+         .tab-inactive { background-color: white; color: #4B5563; border-color: #E5E7EB; }
+         .map-link:hover { text-decoration: underline; color: #00838F; }
+    </style>
+</head>
+<body class="font-sans text-gray-700 bg-ty-bg antialiased flex flex-col min-h-screen">
+
+    <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-md shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex-shrink-0 flex items-center group">
+                    <span class="font-bold text-xl text-ty-main tracking-wider group-hover:opacity-80">桃園 Taoyuan</span>
+                    <span class="ml-2 text-xs text-white bg-ty-accent px-2 py-0.5 rounded-full">港澳專區</span>
+                </a>
+                <div class="hidden md:flex space-x-1">
+                    <a href="index.html" class="text-gray-600 hover:text-ty-main hover:bg-ty-light px-3 py-2 rounded-md text-sm font-medium transition">首頁</a>
+                    <a href="taoyuan_transport.html" class="text-gray-600 hover:text-ty-main hover:bg-ty-light px-3 py-2 rounded-md text-sm font-medium transition">交通</a>
+                    <a href="taoyuan_itinerary_detail.html" class="text-ty-main bg-ty-light px-3 py-2 rounded-md text-sm font-bold transition">行程</a>
+                    <a href="taoyuan_food_souvenir.html" class="text-gray-600 hover:text-ty-main hover:bg-ty-light px-3 py-2 rounded-md text-sm font-medium transition">美食</a>
+                    <a href="taoyuan_accommodation.html" class="text-gray-600 hover:text-ty-main hover:bg-ty-light px-3 py-2 rounded-md text-sm font-medium transition">住宿</a>
+                    <a href="taoyuan_faq.html" class="text-gray-600 hover:text-ty-main hover:bg-ty-light px-3 py-2 rounded-md text-sm font-medium transition">FAQ</a>
+                </div>
+                 <div class="md:hidden flex items-center">
+                    <a href="index.html" class="text-xs text-gray-500">↩ 返首頁</a>
+                </div>
+            </div>
+        </div>
+        <div class="md:hidden overflow-x-auto whitespace-nowrap bg-gray-50 border-t border-gray-100 px-4 py-2 scrollbar-hide">
+            <a href="taoyuan_transport.html" class="inline-block px-3 py-1 text-sm text-gray-600 border border-gray-300 rounded-full mr-2 hover:bg-ty-main hover:text-white transition">🚆 交通</a>
+            <a href="taoyuan_itinerary_detail.html" class="inline-block px-3 py-1 text-sm font-bold bg-ty-main text-white border border-transparent rounded-full mr-2">📅 行程</a>
+            <a href="taoyuan_food_souvenir.html" class="inline-block px-3 py-1 text-sm text-gray-600 border border-gray-300 rounded-full mr-2 hover:bg-ty-main hover:text-white transition">🍜 美食</a>
+            <a href="taoyuan_accommodation.html" class="inline-block px-3 py-1 text-sm text-gray-600 border border-gray-300 rounded-full mr-2 hover:bg-ty-main hover:text-white transition">🏨 住宿</a>
+            <a href="taoyuan_faq.html" class="inline-block px-3 py-1 text-sm text-gray-600 border border-gray-300 rounded-full hover:bg-ty-main hover:text-white transition">❓ FAQ</a>
+        </div>
+    </nav>
+
+    <header class="bg-ty-light pt-36 md:pt-24 pb-8 px-4 text-center">
+        <h1 class="text-3xl font-bold mb-3 text-ty-dark">揀一個玩法，即刻出發</h1>
+        <p class="text-gray-600 max-w-xl mx-auto text-sm md:text-base">
+            已根據航班時間優化：<span class="text-ty-main font-bold">13:30 抵達 / 14:45 起飛</span><br>
+            時間較鬆動，適合慢慢 Check-in 同嘆早餐。<br>
+            點擊景點名可以打開 Google Maps 導航，按底下的「複製」就可以 Share 俾朋友！
+        </p>
+    </header>
+
+    <!-- Tab Navigation -->
+    <div class="sticky top-[108px] md:top-16 z-40 bg-ty-bg pt-4 pb-2 px-4 shadow-sm md:shadow-none">
+        <div class="max-w-4xl mx-auto flex space-x-2 overflow-x-auto scrollbar-hide pb-2 px-2">
+            <button onclick="switchTab('slow')" id="btn-slow" class="tab-active flex-shrink-0 px-5 py-2 rounded-full border text-sm font-bold transition duration-300 whitespace-nowrap shadow-sm">
+                ☕ 3日2夜 慢活
+            </button>
+            <button onclick="switchTab('flash')" id="btn-flash" class="tab-inactive flex-shrink-0 px-5 py-2 rounded-full border text-sm font-bold transition duration-300 whitespace-nowrap shadow-sm">
+                🛍️ 2日1夜 快閃
+            </button>
+            <button onclick="switchTab('family')" id="btn-family" class="tab-inactive flex-shrink-0 px-5 py-2 rounded-full border text-sm font-bold transition duration-300 whitespace-nowrap shadow-sm">
+                👨‍👩‍👧 親子放電遊
+            </button>
+            <button onclick="switchTab('couple')" id="btn-couple" class="tab-inactive flex-shrink-0 px-5 py-2 rounded-full border text-sm font-bold transition duration-300 whitespace-nowrap shadow-sm">
+                💑 情侶浪漫遊
+            </button>
+            <button onclick="switchTab('culture')" id="btn-culture" class="tab-inactive flex-shrink-0 px-5 py-2 rounded-full border text-sm font-bold transition duration-300 whitespace-nowrap shadow-sm">
+                📷 文青打卡遊
+            </button>
+        </div>
+    </div>
+
+    <main class="max-w-3xl mx-auto px-4 py-6 space-y-12 min-h-[60vh]">
+
+        <!-- 行程 1: 3日2夜 慢活 (Default) -->
+        <div id="content-slow" class="space-y-12 transition-opacity duration-500">
+            <div class="bg-blue-50 border-l-4 border-ty-main p-4 rounded-r-lg mb-6">
+                <p class="text-sm text-blue-900"><strong>💡 適合對象：</strong> 第一次嚟桃園、想放鬆心情、鍾意行老街同食好西嘅你。</p>
+            </div>
+
+            <!-- Day 1 -->
+            <section class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="bg-ty-main text-white p-4 flex justify-between items-center">
+                    <h2 class="text-xl font-bold">Day 1｜Check-in 後的黃昏漫步</h2>
+                    <span class="text-sm bg-white/20 px-2 py-1 rounded">主打：夜市</span>
+                </div>
+                <div class="p-6 relative">
+                    <div class="absolute left-8 top-6 bottom-6 w-0.5 bg-gray-200"></div>
+                    <div class="relative pl-10 mb-8">
+                        <div class="absolute left-6 w-4 h-4 bg-ty-accent rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">
+                            13:30 - <a href="https://www.google.com/maps/search/?api=1&query=桃園國際機場" target="_blank" class="map-link">抵達桃園機場 📍</a>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1">慢慢出關、攞行李。搭機捷出市區約需 40 分鐘。</p>
+                    </div>
+                    <div class="relative pl-10 mb-8">
+                        <div class="absolute left-6 w-4 h-4 bg-gray-300 rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">
+                            15:00 - 飯店 Check-in
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1">時間剛剛好！去飯店放低行李，梳洗整理一下，3點半再出門。</p>
+                        <span class="inline-block text-[10px] bg-blue-100 text-blue-500 px-1.5 rounded mt-1">飯店</span>
+                    </div>
+                    <div class="relative pl-10 mb-8">
+                        <div class="absolute left-6 w-4 h-4 bg-gray-300 rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">
+                            16:00 - <a href="https://www.google.com/maps/search/?api=1&query=Xpark" target="_blank" class="map-link">Xpark 水族館 📍</a>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1">避開中午人潮，行完剛好睇日落。</p>
+                        <span class="inline-block text-[10px] bg-blue-100 text-blue-500 px-1.5 rounded mt-1">室內</span>
+                    </div>
+                    <div class="relative pl-10">
+                        <div class="absolute left-6 w-4 h-4 bg-ty-main rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">
+                            19:00 - <a href="https://www.google.com/maps/search/?api=1&query=中壢觀光夜市" target="_blank" class="map-link">中壢觀光夜市 📍</a>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1">晚餐喺度搞掂！必食：米粉湯、地瓜球、排骨酥。</p>
+                        <span class="inline-block text-[10px] bg-green-100 text-green-500 px-1.5 rounded mt-1">戶外</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Day 2 -->
+            <section class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="bg-ty-main text-white p-4 flex justify-between items-center">
+                    <h2 class="text-xl font-bold">Day 2｜全日深度遊</h2>
+                    <span class="text-sm bg-white/20 px-2 py-1 rounded">主打：文化、風景</span>
+                </div>
+                <div class="p-6 relative">
+                    <div class="absolute left-8 top-6 bottom-6 w-0.5 bg-gray-200"></div>
+                    <div class="relative pl-10 mb-8">
+                        <div class="absolute left-6 w-4 h-4 bg-gray-300 rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">
+                            10:00 - <a href="https://www.google.com/maps/search/?api=1&query=大溪老街" target="_blank" class="map-link">大溪老街 📍</a>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1">瞓到自然醒先出門。欣賞巴洛克式建築，午餐食「豆干全餐」。</p>
+                    </div>
+                    <div class="relative pl-10 mb-8">
+                        <div class="absolute left-6 w-4 h-4 bg-gray-300 rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">
+                            14:00 - <a href="https://www.google.com/maps/search/?api=1&query=大溪老茶廠" target="_blank" class="map-link">大溪老茶廠 📍</a>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1">下午茶時間，去茶廠影文青相，飲杯茶，嘆個下午。</p>
+                        <span class="inline-block text-[10px] bg-blue-100 text-blue-500 px-1.5 rounded mt-1">室內+戶外</span>
+                    </div>
+                    <div class="relative pl-10">
+                        <div class="absolute left-6 w-4 h-4 bg-ty-main rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">18:00 - 回市區食火鍋</div>
+                        <p class="text-sm text-gray-500 mt-1">推薦「麻辣鍋」或者「石頭火鍋」，記住要 Book 位。</p>
+                    </div>
+                </div>
+            </section>
+
+             <!-- Day 3 -->
+             <section class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="bg-ty-main text-white p-4 flex justify-between items-center">
+                    <h2 class="text-xl font-bold">Day 3｜最後衝刺與回程</h2>
+                    <span class="text-sm bg-white/20 px-2 py-1 rounded">主打：Outlet、回程</span>
+                </div>
+                <div class="p-6 relative">
+                    <div class="absolute left-8 top-6 bottom-6 w-0.5 bg-gray-200"></div>
+                    <div class="relative pl-10 mb-8">
+                        <div class="absolute left-6 w-4 h-4 bg-gray-300 rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">
+                            10:30 - Check-out ＋ <a href="https://www.google.com/maps/search/?api=1&query=華泰名品城" target="_blank" class="map-link">華泰名品城 (Outlet) 📍</a>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1"><strong>注意時間！</strong> 因為 14:45 飛機，建議 11:00 就要到 Outlet，重點行 1 個鐘，然後食個早午餐。</p>
+                        <span class="inline-block text-[10px] bg-red-100 text-red-500 px-1.5 rounded mt-1">時間緊湊</span>
+                    </div>
+                    <div class="relative pl-10">
+                        <div class="absolute left-6 w-4 h-4 bg-ty-accent rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">12:30 - 前往機場</div>
+                        <p class="text-sm text-gray-500 mt-1">Outlet 就在機捷旁，搭幾個站就到機場。請務必在 <strong>12:45 前</strong> 到達櫃檯報到。</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- 行程 2: 2日1夜 快閃 (Hidden) -->
+        <div id="content-flash" class="space-y-12 hidden transition-opacity duration-500">
+            <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-r-lg mb-6">
+                <p class="text-sm text-yellow-900"><strong>💡 適合對象：</strong> 週末快閃、轉機停留、主要目的係 Shopping 同食野。</p>
+            </div>
+
+            <!-- Day 1 -->
+            <section class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="bg-yellow-500 text-white p-4 flex justify-between items-center">
+                    <h2 class="text-xl font-bold">Day 1｜瘋狂購物與夜市</h2>
+                    <span class="text-sm bg-white/20 px-2 py-1 rounded">主打：Shopping</span>
+                </div>
+                <div class="p-6 relative">
+                    <div class="absolute left-8 top-6 bottom-6 w-0.5 bg-gray-200"></div>
+                    <div class="relative pl-10 mb-8">
+                        <div class="absolute left-6 w-4 h-4 bg-yellow-500 rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">
+                            13:30 - 抵達 + <a href="https://www.google.com/maps/search/?api=1&query=華泰名品城" target="_blank" class="map-link">華泰名品城 📍</a>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1">13:30 落機，行李直接寄放係機捷 A18 站或者商場 Locker。約 15:00 開始行街，食個 Tea 再戰。</p>
+                    </div>
+                    <div class="relative pl-10 mb-8">
+                        <div class="absolute left-6 w-4 h-4 bg-gray-300 rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">18:00 - 飯店 Check-in (青埔區)</div>
+                        <p class="text-sm text-gray-500 mt-1">建議住係高鐵/機捷 A18 附近，方便聽日搭飛機。</p>
+                    </div>
+                    <div class="relative pl-10">
+                        <div class="absolute left-6 w-4 h-4 bg-ty-main rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">
+                            19:30 - <a href="https://www.google.com/maps/search/?api=1&query=中壢觀光夜市" target="_blank" class="map-link">中壢夜市 📍</a>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1">放低戰利品，搭的士去夜市（約 15 分鐘）食盡台灣小食。</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Day 2 -->
+            <section class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="bg-yellow-500 text-white p-4 flex justify-between items-center">
+                    <h2 class="text-xl font-bold">Day 2｜按摩放鬆與回程</h2>
+                    <span class="text-sm bg-white/20 px-2 py-1 rounded">主打：放鬆</span>
+                </div>
+                <div class="p-6 relative">
+                    <div class="absolute left-8 top-6 bottom-6 w-0.5 bg-gray-200"></div>
+                    <div class="relative pl-10 mb-8">
+                        <div class="absolute left-6 w-4 h-4 bg-gray-300 rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">10:00 - 腳底按摩 / 全身指壓</div>
+                        <p class="text-sm text-gray-500 mt-1">14:45 機，早上無太多時間去遠。建議附近搵間按摩店，消除疲勞。</p>
+                        <span class="inline-block text-[10px] bg-blue-100 text-blue-500 px-1.5 rounded mt-1">室內</span>
+                    </div>
+                    <div class="relative pl-10">
+                        <div class="absolute left-6 w-4 h-4 bg-ty-accent rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">12:30 - 前往機場</div>
+                        <p class="text-sm text-gray-500 mt-1">輕鬆搭機捷去機場。午餐可以係機場食。</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- 行程 3: 親子放電遊 (Hidden) -->
+        <div id="content-family" class="space-y-12 hidden transition-opacity duration-500">
+            <div class="bg-pink-50 border-l-4 border-pink-500 p-4 rounded-r-lg mb-6">
+                <p class="text-sm text-pink-900"><strong>💡 適合對象：</strong> 帶住小朋友，唔想行太多路，重點係「放電」同 DIY。</p>
+            </div>
+
+            <!-- Day 1 -->
+            <section class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="bg-pink-500 text-white p-4 flex justify-between items-center">
+                    <h2 class="text-xl font-bold">Day 1｜飯店放電 + 晚餐</h2>
+                    <span class="text-sm bg-white/20 px-2 py-1 rounded">主打：和逸/Xpark</span>
+                </div>
+                <div class="p-6 relative">
+                    <div class="absolute left-8 top-6 bottom-6 w-0.5 bg-gray-200"></div>
+                    <div class="relative pl-10 mb-8">
+                        <div class="absolute left-6 w-4 h-4 bg-pink-500 rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">13:30 抵達 ➜ 15:00 Check-in</div>
+                        <p class="text-sm text-gray-500 mt-1">如果有訂「和逸飯店」，可以直接去櫃檯。房間有卡通頻道直播，小朋友會好開心。</p>
+                    </div>
+                    <div class="relative pl-10">
+                        <div class="absolute left-6 w-4 h-4 bg-ty-main rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">
+                            16:00 - <a href="https://www.google.com/maps/search/?api=1&query=巧虎夢想樂園" target="_blank" class="map-link">巧虎夢想樂園 📍</a>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1">就在飯店樓下，放電一流。玩完直接係商場食晚餐，唔使周圍走。</p>
+                        <span class="inline-block text-[10px] bg-blue-100 text-blue-500 px-1.5 rounded mt-1">室內</span>
+                    </div>
+                </div>
+            </section>
+
+             <!-- Day 2 -->
+             <section class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="bg-pink-500 text-white p-4 flex justify-between items-center">
+                    <h2 class="text-xl font-bold">Day 2｜公園放電 + 水族館</h2>
+                    <span class="text-sm bg-white/20 px-2 py-1 rounded">主打：戶外、Xpark</span>
+                </div>
+                <div class="p-6 relative">
+                    <div class="absolute left-8 top-6 bottom-6 w-0.5 bg-gray-200"></div>
+                    <div class="relative pl-10 mb-8">
+                        <div class="absolute left-6 w-4 h-4 bg-gray-300 rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">
+                            10:00 - <a href="https://www.google.com/maps/search/?api=1&query=橫山書法藝術公園" target="_blank" class="map-link">橫山書法藝術公園 📍</a>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1">就在 A17 站旁。趁早上無咁熱，去超大特色遊樂場玩滑梯同沙池。</p>
+                        <span class="inline-block text-[10px] bg-green-100 text-green-500 px-1.5 rounded mt-1">戶外</span>
+                    </div>
+                    <div class="relative pl-10 mb-8">
+                        <div class="absolute left-6 w-4 h-4 bg-gray-300 rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">
+                            14:00 - <a href="https://www.google.com/maps/search/?api=1&query=Xpark" target="_blank" class="map-link">Xpark 水族館 📍</a>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1">下午最熱嘅時候躲入水族館。睇企鵝、水母，仲有互動體驗。</p>
+                        <span class="inline-block text-[10px] bg-blue-100 text-blue-500 px-1.5 rounded mt-1">冷氣開放</span>
+                    </div>
+                    <div class="relative pl-10">
+                        <div class="absolute left-6 w-4 h-4 bg-ty-accent rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">18:00 - 輕鬆晚餐</div>
+                        <p class="text-sm text-gray-500 mt-1">可以揀壽司郎或者台灣料理，方便又乾淨。</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Day 3 -->
+            <section class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="bg-pink-500 text-white p-4 flex justify-between items-center">
+                    <h2 class="text-xl font-bold">Day 3｜最後採買與回程</h2>
+                    <span class="text-sm bg-white/20 px-2 py-1 rounded">主打：回程</span>
+                </div>
+                <div class="p-6 relative">
+                    <div class="absolute left-8 top-6 bottom-6 w-0.5 bg-gray-200"></div>
+                    <div class="relative pl-10">
+                        <div class="absolute left-6 w-4 h-4 bg-ty-main rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">10:30 Check-out ➜ 12:30 機場</div>
+                        <p class="text-sm text-gray-500 mt-1">最後一日唔好排行程，讓小朋友瞓飽啲，食個悠閒早餐，收拾心情去機場。</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- 行程 4: 情侶浪漫遊 (Hidden) -->
+        <div id="content-couple" class="space-y-12 hidden transition-opacity duration-500">
+            <div class="bg-purple-50 border-l-4 border-purple-500 p-4 rounded-r-lg mb-6">
+                <p class="text-sm text-purple-900"><strong>💡 適合對象：</strong> 兩個人想放鬆、影靚相、睇夜景，享受甜蜜氛圍。</p>
+            </div>
+
+            <!-- Day 1 -->
+            <section class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="bg-purple-500 text-white p-4 flex justify-between items-center">
+                    <h2 class="text-xl font-bold">Day 1｜浪漫海岸與夜景</h2>
+                    <span class="text-sm bg-white/20 px-2 py-1 rounded">主打：氣氛</span>
+                </div>
+                <div class="p-6 relative">
+                    <div class="absolute left-8 top-6 bottom-6 w-0.5 bg-gray-200"></div>
+                    <div class="relative pl-10 mb-8">
+                        <div class="absolute left-6 w-4 h-4 bg-purple-500 rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">
+                            13:30 抵達 ➜ 16:00 <a href="https://www.google.com/maps/search/?api=1&query=永安漁港海螺文化體驗園區" target="_blank" class="map-link">海螺文化館 📍</a>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1">Check-in 後直接去海邊！純白色的海螺建築超好影！黃昏時間一齊睇日落。</p>
+                        <span class="inline-block text-[10px] bg-green-100 text-green-500 px-1.5 rounded mt-1">戶外</span>
+                    </div>
+                    <div class="relative pl-10">
+                        <div class="absolute left-6 w-4 h-4 bg-ty-main rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">
+                            19:00 - <a href="https://www.google.com/maps/search/?api=1&query=龍潭乳姑山夜景" target="_blank" class="map-link">龍潭乳姑山夜景餐廳 📍</a>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1">桃園睇夜景勝地，有好多景觀餐廳。一邊食飯一邊睇百萬夜景，氣氛一流。</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Day 2 -->
+            <section class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="bg-purple-500 text-white p-4 flex justify-between items-center">
+                    <h2 class="text-xl font-bold">Day 2｜甜蜜互動時光</h2>
+                    <span class="text-sm bg-white/20 px-2 py-1 rounded">主打：約會</span>
+                </div>
+                <div class="p-6 relative">
+                    <div class="absolute left-8 top-6 bottom-6 w-0.5 bg-gray-200"></div>
+                    <div class="relative pl-10 mb-8">
+                        <div class="absolute left-6 w-4 h-4 bg-purple-500 rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">
+                            11:00 - <a href="https://www.google.com/maps/search/?api=1&query=埔心牧場" target="_blank" class="map-link">埔心牧場 (餵動物) 📍</a>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1">可以近距離餵水豚君、羊駝，影相超得意！園區好大，散步拍拖好舒服。</p>
+                        <span class="inline-block text-[10px] bg-green-100 text-green-500 px-1.5 rounded mt-1">戶外</span>
+                    </div>
+                    <div class="relative pl-10">
+                        <div class="absolute left-6 w-4 h-4 bg-ty-accent rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">16:00 - Xpark 水族館</div>
+                        <p class="text-sm text-gray-500 mt-1">夢幻水母牆同大水槽係必影打卡位。行累了就回市區按摩。</p>
+                        <span class="inline-block text-[10px] bg-blue-100 text-blue-500 px-1.5 rounded mt-1">冷氣開放</span>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Day 3 -->
+            <section class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="bg-purple-500 text-white p-4 flex justify-between items-center">
+                    <h2 class="text-xl font-bold">Day 3｜Coffee & Go</h2>
+                    <span class="text-sm bg-white/20 px-2 py-1 rounded">主打：回程</span>
+                </div>
+                <div class="p-6 relative">
+                    <div class="absolute left-8 top-6 bottom-6 w-0.5 bg-gray-200"></div>
+                    <div class="relative pl-10">
+                        <div class="absolute left-6 w-4 h-4 bg-ty-main rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">10:30 Brunch ➜ 12:30 機場</div>
+                        <p class="text-sm text-gray-500 mt-1">14:45 飛機，早上找間漂亮的咖啡廳食個 Brunch，完美結束旅程。</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- 行程 5: 文青打卡遊 (Hidden) -->
+        <div id="content-culture" class="space-y-12 hidden transition-opacity duration-500">
+            <div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 rounded-r-lg mb-6">
+                <p class="text-sm text-indigo-900"><strong>💡 適合對象：</strong> 鍾意影相、建築美學、行市集、飲手沖咖啡嘅文青朋友。</p>
+            </div>
+
+            <!-- Day 1 -->
+            <section class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="bg-indigo-500 text-white p-4 flex justify-between items-center">
+                    <h2 class="text-xl font-bold">Day 1｜建築美學散策</h2>
+                    <span class="text-sm bg-white/20 px-2 py-1 rounded">主打：建築、藝術</span>
+                </div>
+                <div class="p-6 relative">
+                    <div class="absolute left-8 top-6 bottom-6 w-0.5 bg-gray-200"></div>
+                    <div class="relative pl-10 mb-8">
+                        <div class="absolute left-6 w-4 h-4 bg-indigo-500 rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">
+                            13:30 抵達 ➜ 15:30 <a href="https://www.google.com/maps/search/?api=1&query=橫山書法藝術館" target="_blank" class="map-link">橫山書法藝術館 📍</a>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1">Check-in 後趁還有日光去影相。清水模建築加上湖景，光影效果好靚。</p>
+                        <span class="inline-block text-[10px] bg-blue-100 text-blue-500 px-1.5 rounded mt-1">室內+戶外</span>
+                    </div>
+                    <div class="relative pl-10">
+                        <div class="absolute left-6 w-4 h-4 bg-ty-main rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">
+                            17:30 - <a href="https://www.google.com/maps/search/?api=1&query=1895乙未保台紀念公園" target="_blank" class="map-link">1895 乙未保台紀念公園 📍</a>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1">榮獲建築大獎嘅公園。圓環狀嘅「乙未之環」夜晚著燈好靚。</p>
+                        <span class="inline-block text-[10px] bg-green-100 text-green-500 px-1.5 rounded mt-1">戶外</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Day 2 -->
+            <section class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="bg-indigo-500 text-white p-4 flex justify-between items-center">
+                    <h2 class="text-xl font-bold">Day 2｜老時光味道</h2>
+                    <span class="text-sm bg-white/20 px-2 py-1 rounded">主打：老宅、眷村</span>
+                </div>
+                <div class="p-6 relative">
+                    <div class="absolute left-8 top-6 bottom-6 w-0.5 bg-gray-200"></div>
+                    <div class="relative pl-10 mb-8">
+                        <div class="absolute left-6 w-4 h-4 bg-indigo-500 rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">
+                            10:00 - <a href="https://www.google.com/maps/search/?api=1&query=大溪老茶廠" target="_blank" class="map-link">大溪老茶廠 📍</a>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1">融合台、日、英式風格嘅百年茶廠。藍色窗櫺非常經典。</p>
+                        <span class="inline-block text-[10px] bg-blue-100 text-blue-500 px-1.5 rounded mt-1">室內</span>
+                    </div>
+                    <div class="relative pl-10">
+                        <div class="absolute left-6 w-4 h-4 bg-ty-accent rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">
+                            14:00 - <a href="https://www.google.com/maps/search/?api=1&query=馬祖新村眷村文創園區" target="_blank" class="map-link">馬祖新村眷村文創園區 📍</a>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1">有「桃園將軍村」之稱。保留完整眷村建築，有好多特色小店、展覽。</p>
+                        <span class="inline-block text-[10px] bg-green-100 text-green-500 px-1.5 rounded mt-1">戶外</span>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Day 3 -->
+            <section class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="bg-indigo-500 text-white p-4 flex justify-between items-center">
+                    <h2 class="text-xl font-bold">Day 3｜手信與回程</h2>
+                    <span class="text-sm bg-white/20 px-2 py-1 rounded">主打：回程</span>
+                </div>
+                <div class="p-6 relative">
+                    <div class="absolute left-8 top-6 bottom-6 w-0.5 bg-gray-200"></div>
+                    <div class="relative pl-10">
+                        <div class="absolute left-6 w-4 h-4 bg-ty-main rounded-full -translate-x-1/2 mt-1.5 border-2 border-white"></div>
+                        <div class="font-bold text-gray-800">10:30 買手信 ➜ 12:30 機場</div>
+                        <p class="text-sm text-gray-500 mt-1">14:45 飛機。可以去買波士頓派或豆干，然後悠閒去機場。</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="text-center py-8">
+             <button onclick="copyItinerary()" class="bg-gray-800 text-white px-8 py-3 rounded-full font-bold shadow-lg hover:bg-gray-700 transition transform hover:-translate-y-1">
+                📋 複製文字版行程
+            </button>
+            <p class="mt-4 text-xs text-gray-400">行程已根據 13:30 抵達 / 14:45 起飛 航班優化。</p>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-gray-500 py-6 text-center text-xs mt-auto">
+        &copy; 2024 Taoyuan Tourism.
+    </footer>
+
+    <script>
+        function switchTab(tabName) {
+            // Hide all contents
+            const contents = ['slow', 'flash', 'family', 'couple', 'culture'];
+            contents.forEach(id => {
+                document.getElementById('content-' + id).classList.add('hidden');
+            });
+            
+            // Show selected content
+            const content = document.getElementById('content-' + tabName);
+            content.classList.remove('hidden');
+            
+            // Update button styles
+            contents.forEach(btn => {
+                const element = document.getElementById('btn-' + btn);
+                if (btn === tabName) {
+                    element.classList.remove('tab-inactive');
+                    element.classList.add('tab-active');
+                } else {
+                    element.classList.remove('tab-active');
+                    element.classList.add('tab-inactive');
+                }
+            });
+        }
+
+        function copyItinerary() {
+            // Find visible content
+            const tabs = ['slow', 'flash', 'family', 'couple', 'culture'];
+            let activeId = '';
+            
+            for (let i = 0; i < tabs.length; i++) {
+                const el = document.getElementById('content-' + tabs[i]);
+                if (!el.classList.contains('hidden')) {
+                    activeId = 'content-' + tabs[i];
+                    break;
+                }
+            }
+
+            if (!activeId) return;
+
+            // Get text content (removing extra newlines)
+            const container = document.getElementById(activeId);
+            let text = container.innerText;
+            
+            // Cleanup text a bit for better clipboard format
+            text = text.replace(/📍/g, '').replace(/\n\s*\n/g, '\n').trim();
+            
+            // Create textarea to copy
+            const textarea = document.createElement('textarea');
+            textarea.value = "【桃園旅遊行程推薦 (午去午回版)】\n\n" + text + "\n\n(來自港澳旅客專區)";
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            
+            alert('✅ 行程已複製！\n您可以貼上到 Notes 或 WhatsApp 分享俾朋友。');
+        }
+    </script>
+</body>
+</html>

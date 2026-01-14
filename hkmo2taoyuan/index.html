@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>桃園自由行攻略｜港澳旅客專區：3日2夜、週末快閃、親子遊懶人包</title>
+    <meta name="description" content="專為香港澳門旅客設計的桃園旅遊攻略！飛兩個鐘即到，唔使揸車、唔使做功課。提供3日2夜慢活行程、週末快閃Shopping、親子放電好去處。機場捷運直達市區，交通、美食、住宿全攻略。">
+    <meta name="keywords" content="台灣自由行, 桃園旅遊, 台北桃園, 週末快閃, 台灣親子遊, 桃園機場捷運, 台灣好去處, 不自駕遊">
+    
+    <!-- Open Graph for Social Media (WhatsApp/Facebook) -->
+    <meta property="og:title" content="飛兩個鐘即到！桃園自由行懶人包｜港澳旅客專區">
+    <meta property="og:description" content="唔使揸車、唔使趕行程！3日2夜慢活、週末快閃、親子放電，全部幫你Plan好晒。">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1599229649931-185d58c89498?q=80&w=1974&auto=format&fit=crop">
+    <meta property="og:type" content="website">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Noto Sans TC"', 'sans-serif'] },
+                    colors: {
+                        ty: { light: '#E0F7FA', main: '#00838F', dark: '#006064', accent: '#FF7043', bg: '#F9FAFB' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        .hero-bg {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1599229649931-185d58c89498?q=80&w=1974&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="font-sans text-gray-700 bg-ty-bg antialiased flex flex-col min-h-screen">
+
+    <!-- 統一導航列 -->
+    <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-md shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex-shrink-0 flex items-center group">
+                    <span class="font-bold text-xl text-ty-main tracking-wider group-hover:opacity-80">桃園 Taoyuan</span>
+                    <span class="ml-2 text-xs text-white bg-ty-accent px-2 py-0.5 rounded-full">港澳專區</span>
+                </a>
+                <div class="hidden md:flex space-x-1">
+                    <a href="index.html" class="text-ty-main bg-ty-light px-3 py-2 rounded-md text-sm font-bold transition">首頁</a>
+                    <a href="taoyuan_transport.html" class="text-gray-600 hover:text-ty-main hover:bg-ty-light px-3 py-2 rounded-md text-sm font-medium transition">交通</a>
+                    <a href="taoyuan_itinerary_detail.html" class="text-gray-600 hover:text-ty-main hover:bg-ty-light px-3 py-2 rounded-md text-sm font-medium transition">行程</a>
+                    <a href="taoyuan_food_souvenir.html" class="text-gray-600 hover:text-ty-main hover:bg-ty-light px-3 py-2 rounded-md text-sm font-medium transition">美食</a>
+                    <a href="taoyuan_accommodation.html" class="text-gray-600 hover:text-ty-main hover:bg-ty-light px-3 py-2 rounded-md text-sm font-medium transition">住宿</a>
+                    <a href="taoyuan_faq.html" class="text-gray-600 hover:text-ty-main hover:bg-ty-light px-3 py-2 rounded-md text-sm font-medium transition">FAQ</a>
+                </div>
+                 <div class="md:hidden flex items-center">
+                    <span class="text-xs text-gray-500">港澳旅客專用</span>
+                </div>
+            </div>
+        </div>
+        <div class="md:hidden overflow-x-auto whitespace-nowrap bg-gray-50 border-t border-gray-100 px-4 py-2 scrollbar-hide">
+            <a href="taoyuan_transport.html" class="inline-block px-3 py-1 text-sm text-gray-600 border border-gray-300 rounded-full mr-2 hover:bg-ty-main hover:text-white transition">🚆 交通</a>
+            <a href="taoyuan_itinerary_detail.html" class="inline-block px-3 py-1 text-sm text-gray-600 border border-gray-300 rounded-full mr-2 hover:bg-ty-main hover:text-white transition">📅 行程</a>
+            <a href="taoyuan_food_souvenir.html" class="inline-block px-3 py-1 text-sm text-gray-600 border border-gray-300 rounded-full mr-2 hover:bg-ty-main hover:text-white transition">🍜 美食</a>
+            <a href="taoyuan_accommodation.html" class="inline-block px-3 py-1 text-sm text-gray-600 border border-gray-300 rounded-full mr-2 hover:bg-ty-main hover:text-white transition">🏨 住宿</a>
+            <a href="taoyuan_faq.html" class="inline-block px-3 py-1 text-sm text-gray-600 border border-gray-300 rounded-full hover:bg-ty-main hover:text-white transition">❓ FAQ</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-bg h-screen min-h-[600px] flex items-center justify-center text-center px-4 relative pt-32 md:pt-0">
+        <div class="max-w-3xl mx-auto text-white">
+            <!-- 修正：更新主標題文案 -->
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 leading-tight drop-shadow-lg tracking-tight">
+                飛兩個鐘即到，<br>原來臺灣可以咁舒服
+            </h1>
+            <h2 class="text-xl md:text-2xl font-light mb-8 drop-shadow-md opacity-95">
+                桃園・港澳朋友最輕鬆嘅慢活旅行地
+            </h2>
+            <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 mb-8 border border-white/20 shadow-xl">
+                <p class="text-lg md:text-xl leading-relaxed font-light">
+                    收工即刻飛，落機搭機捷就出到市區。<br class="hidden md:block">
+                    唔趕行程、唔使揸車、周圍都係好野食。<br>
+                    <span class="font-medium text-ty-light">真正適合想「Hea遊」嘅你，唔會中伏！</span>
+                </p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="taoyuan_itinerary_detail.html" class="bg-ty-accent hover:bg-orange-600 text-white font-bold py-4 px-8 rounded-full transition duration-300 shadow-lg text-lg transform hover:-translate-y-1">
+                    👉 3日2夜 Hea 遊行程
+                </a>
+                <a href="taoyuan_transport.html" class="bg-white/20 hover:bg-white/30 backdrop-blur border border-white text-white font-bold py-4 px-8 rounded-full transition duration-300 text-lg">
+                    🚆 交通懶人包
+                </a>
+            </div>
+        </div>
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce text-white opacity-80">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+        </div>
+    </header>
+
+    <!-- Quick Tips Bar -->
+    <div class="bg-ty-main text-white py-4 px-4 text-center text-sm md:text-base">
+        <div class="max-w-6xl mx-auto flex flex-wrap justify-center gap-6">
+            <span class="flex items-center"><span class="text-yellow-300 mr-1">💡</span> 電壓：110V (兩腳扁插)，記得帶轉插呀！</span>
+            <span class="flex items-center"><span class="text-yellow-300 mr-1">🌦️</span> 天氣：同香港差唔多，但風大少少</span>
+            <span class="flex items-center"><span class="text-yellow-300 mr-1">💳</span> 付款：大舖收卡，夜市要俾 Cash</span>
+        </div>
+    </div>
+
+    <!-- Feature Grid -->
+    <section class="py-16 px-4 max-w-6xl mx-auto">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-800">點解要揀桃園？</h2>
+            <p class="text-gray-600 mt-2">因為夠近、夠方便、夠好食囉！</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+            <a href="taoyuan_transport.html" class="group block bg-white rounded-2xl shadow-sm hover:shadow-xl transition duration-300 overflow-hidden border border-gray-100">
+                <div class="h-48 bg-gray-200 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1558287394-06d203597d39?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Transport">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2 group-hover:text-ty-main transition">🚆 唔使揸車都玩到</h3>
+                    <p class="text-gray-600">有機場捷運同高鐵，好似搭港鐵咁方便，路癡都唔怕迷路。</p>
+                    <span class="text-ty-main text-sm font-bold mt-4 block">睇交通教學 →</span>
+                </div>
+            </a>
+            <a href="taoyuan_itinerary_detail.html" class="group block bg-white rounded-2xl shadow-sm hover:shadow-xl transition duration-300 overflow-hidden border border-gray-100">
+                <div class="h-48 bg-gray-200 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Itinerary">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2 group-hover:text-ty-main transition">📅 3日2夜剛剛好</h3>
+                    <p class="text-gray-600">有Outlet行街、有老街睇古蹟、仲有靚景打卡，行程幫你排好晒。</p>
+                    <span class="text-ty-main text-sm font-bold mt-4 block">睇示範行程 →</span>
+                </div>
+            </a>
+            <a href="taoyuan_food_souvenir.html" class="group block bg-white rounded-2xl shadow-sm hover:shadow-xl transition duration-300 overflow-hidden border border-gray-100">
+                <div class="h-48 bg-gray-200 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Food">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2 group-hover:text-ty-main transition">🍜 必食清單</h3>
+                    <p class="text-gray-600">由夜市地瓜球到文青Cafe，仲有必買嘅大溪豆干，減肥留返返去先講。</p>
+                    <span class="text-ty-main text-sm font-bold mt-4 block">搵好野食 →</span>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-400 py-10 mt-auto text-center px-4">
+        <div class="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 mb-8 text-sm text-left">
+            <div>
+                <h4 class="text-white font-bold mb-3">新手必睇</h4>
+                <ul class="space-y-2">
+                    <li><a href="taoyuan_faq.html" class="hover:text-white">常見問題 FAQ</a></li>
+                    <li><a href="taoyuan_transport.html" class="hover:text-white">交通懶人包</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-3">行程規劃</h4>
+                <ul class="space-y-2">
+                    <li><a href="taoyuan_itinerary_detail.html" class="hover:text-white">3日2夜示範</a></li>
+                    <li><a href="taoyuan_accommodation.html" class="hover:text-white">住宿區域建議</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-3">吃喝玩樂</h4>
+                <ul class="space-y-2">
+                    <li><a href="taoyuan_food_souvenir.html" class="hover:text-white">美食地圖</a></li>
+                    <li><a href="taoyuan_food_souvenir.html#souvenir" class="hover:text-white">必買手信</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-3">關於</h4>
+                <p class="text-xs leading-relaxed">本專區由桃園旅遊局特別為港澳旅客製作，希望大家感受到台灣的熱情與便利。</p>
+            </div>
+        </div>
+        <div class="border-t border-gray-700 pt-6 text-xs">
+            &copy; 2024 Taoyuan Tourism. All rights reserved. | 港澳旅客專屬推廣內容
+        </div>
+    </footer>
+
+</body>
+</html>

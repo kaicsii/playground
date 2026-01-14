@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>桃園交通懶人包｜機場出市區、機捷、巴士全攻略 (港澳旅客適用)</title>
+    <meta name="description" content="唔使揸車都能玩轉桃園！教你由機場搭捷運出市區、悠遊卡點買、巴士點搭。完全無需國際駕照，適合自由行新手。">
+    <meta name="keywords" content="桃園機場捷運, 機場出市區, 桃園交通, 悠遊卡, 台灣不自駕, 台灣包車">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Noto Sans TC"', 'sans-serif'] },
+                    colors: {
+                        ty: { light: '#E0F7FA', main: '#00838F', dark: '#006064', accent: '#FF7043', bg: '#F9FAFB' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+         .scrollbar-hide::-webkit-scrollbar { display: none; }
+         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="font-sans text-gray-700 bg-ty-bg antialiased flex flex-col min-h-screen">
+
+    <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-md shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex-shrink-0 flex items-center group">
+                    <span class="font-bold text-xl text-ty-main tracking-wider group-hover:opacity-80">桃園 Taoyuan</span>
+                    <span class="ml-2 text-xs text-white bg-ty-accent px-2 py-0.5 rounded-full">港澳專區</span>
+                </a>
+                <div class="hidden md:flex space-x-1">
+                    <a href="index.html" class="text-gray-600 hover:text-ty-main hover:bg-ty-light px-3 py-2 rounded-md text-sm font-medium transition">首頁</a>
+                    <a href="taoyuan_transport.html" class="text-ty-main bg-ty-light px-3 py-2 rounded-md text-sm font-bold transition">交通</a>
+                    <a href="taoyuan_itinerary_detail.html" class="text-gray-600 hover:text-ty-main hover:bg-ty-light px-3 py-2 rounded-md text-sm font-medium transition">行程</a>
+                    <a href="taoyuan_food_souvenir.html" class="text-gray-600 hover:text-ty-main hover:bg-ty-light px-3 py-2 rounded-md text-sm font-medium transition">美食</a>
+                    <a href="taoyuan_accommodation.html" class="text-gray-600 hover:text-ty-main hover:bg-ty-light px-3 py-2 rounded-md text-sm font-medium transition">住宿</a>
+                    <a href="taoyuan_faq.html" class="text-gray-600 hover:text-ty-main hover:bg-ty-light px-3 py-2 rounded-md text-sm font-medium transition">FAQ</a>
+                </div>
+                 <div class="md:hidden flex items-center">
+                    <a href="index.html" class="text-xs text-gray-500">↩ 返首頁</a>
+                </div>
+            </div>
+        </div>
+        <div class="md:hidden overflow-x-auto whitespace-nowrap bg-gray-50 border-t border-gray-100 px-4 py-2 scrollbar-hide">
+            <a href="taoyuan_transport.html" class="inline-block px-3 py-1 text-sm font-bold bg-ty-main text-white border border-transparent rounded-full mr-2">🚆 交通</a>
+            <a href="taoyuan_itinerary_detail.html" class="inline-block px-3 py-1 text-sm text-gray-600 border border-gray-300 rounded-full mr-2 hover:bg-ty-main hover:text-white transition">📅 行程</a>
+            <a href="taoyuan_food_souvenir.html" class="inline-block px-3 py-1 text-sm text-gray-600 border border-gray-300 rounded-full mr-2 hover:bg-ty-main hover:text-white transition">🍜 美食</a>
+            <a href="taoyuan_accommodation.html" class="inline-block px-3 py-1 text-sm text-gray-600 border border-gray-300 rounded-full mr-2 hover:bg-ty-main hover:text-white transition">🏨 住宿</a>
+            <a href="taoyuan_faq.html" class="inline-block px-3 py-1 text-sm text-gray-600 border border-gray-300 rounded-full hover:bg-ty-main hover:text-white transition">❓ FAQ</a>
+        </div>
+    </nav>
+
+    <header class="bg-ty-main text-white pt-36 md:pt-24 pb-16 px-4 text-center">
+        <span class="inline-block bg-white/20 text-white px-3 py-1 rounded-full text-sm font-bold mb-4 tracking-widest">港澳旅客攻略</span>
+        <h1 class="text-3xl md:text-5xl font-bold mb-4">唔揸車，一樣玩得盡興</h1>
+        <p class="opacity-90 max-w-xl mx-auto text-lg mt-4">
+            手把手教你由落機開始，點樣搭車、點樣行。<br>方式同香港好似，完全唔使驚。
+        </p>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-12 space-y-16">
+        <!-- Section 1 -->
+        <section class="flex flex-col md:flex-row gap-8 items-start">
+            <div class="md:w-1/3 sticky top-36 md:top-24">
+                <span class="text-ty-accent font-bold tracking-widest uppercase text-xs">Step 1</span>
+                <h2 class="text-2xl font-bold text-gray-800 mt-1 mb-2">機場 → 市區</h2>
+                <p class="text-sm text-gray-500">落機第一件事做咩好？</p>
+            </div>
+            <div class="md:w-2/3 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                <h3 class="text-xl font-bold text-ty-main mb-3">🚆 機場捷運 (Taoyuan Metro)</h3>
+                <p class="text-gray-600 mb-4">就好似香港嘅機場快綫 + 東涌綫。一出機場就係車站，指示牌有繁體中文同英文，唔會迷路。</p>
+                <div class="space-y-3 mb-4">
+                    <div class="flex items-center bg-purple-50 p-3 rounded-lg border-l-4 border-purple-500">
+                        <span class="text-purple-700 font-bold mr-2">直達車 (紫色)</span>
+                        <span class="text-sm text-gray-600">停大站，快啲出台北/高鐵站。</span>
+                    </div>
+                    <div class="flex items-center bg-blue-50 p-3 rounded-lg border-l-4 border-blue-500">
+                        <span class="text-blue-700 font-bold mr-2">普通車 (藍色)</span>
+                        <span class="text-sm text-gray-600">站站停，去飯店/Outlet最啱。</span>
+                    </div>
+                </div>
+                <div class="mt-4 bg-gray-50 p-3 rounded text-xs text-gray-500">
+                    💡 <strong>小貼士：</strong> 可以用悠遊卡 (EasyCard) 拍卡入閘，即係台灣版八達通，或者即場買單程飛 (Token)。<br>
+                    <strong>邊度買悠遊卡？</strong> 機場便利店 (7-11/全家) 或 捷運站詢問處都有得買。
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2 -->
+        <section class="flex flex-col md:flex-row gap-8 items-start">
+            <div class="md:w-1/3 sticky top-36 md:top-24">
+                <span class="text-ty-accent font-bold tracking-widest uppercase text-xs">Step 2</span>
+                <h2 class="text-2xl font-bold text-gray-800 mt-1 mb-2">市內移動</h2>
+                <p class="text-sm text-gray-500">去景點、去夜市點樣搭？</p>
+            </div>
+            <div class="md:w-2/3 space-y-4">
+                <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-ty-main">
+                    <h3 class="font-bold text-lg mb-2">市區巴士 (Bus)</h3>
+                    <p class="text-gray-600 text-sm">大部分巴士都有電子螢幕報站，唔怕過站。建議用 <strong>Google Maps</strong> 查路線，非常準確。記得上落車都要「嗶」卡。</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-yellow-400">
+                    <h3 class="font-bold text-lg mb-2">台灣好行 (觀光巴士)</h3>
+                    <p class="text-gray-600 text-sm">專為遊客設計嘅路線，直接去大溪老街、石門水庫等景點。唔使轉車，最啱懶人。記得 check 定班次時間表。</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-gray-400">
+                    <h3 class="font-bold text-lg mb-2">Uber / 的士</h3>
+                    <p class="text-gray-600 text-sm">
+                        如果人多（3-4人），<strong>夾份搭的士可能仲抵</strong>，又舒服唔使逼。
+                        <br>桃園用 Uber 叫車好方便，唔使驚司機兜路。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div class="text-center pt-8">
+            <a href="taoyuan_itinerary_detail.html" class="bg-ty-accent hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:-translate-y-1">
+                搞掂交通，即刻睇行程 →
+            </a>
+        </div>
+    </main>
+    
+    <footer class="bg-gray-800 text-gray-500 py-6 text-center text-xs mt-auto">
+        &copy; 2024 Taoyuan Tourism.
+    </footer>
+</body>
+</html>

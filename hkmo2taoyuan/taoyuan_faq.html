@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>桃園旅遊常見問題｜港澳旅客入境、交通、行李寄放全解答</title>
+    <meta name="description" content="解答港澳旅客最關心的問題：台灣簽證點整？機場邊度買SIM卡？回程行李寄放邊度？電壓係幾多？緊急電話號碼。一文看清，安心出發。">
+    <meta name="keywords" content="台灣簽證, 桃園行李寄放, 台灣SIM卡, 台灣電壓, 港澳居民入台證, 台灣旅遊FAQ">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Noto Sans TC"', 'sans-serif'] },
+                    colors: {
+                        ty: { light: '#E0F7FA', main: '#00838F', dark: '#006064', accent: '#FF7043', bg: '#F9FAFB' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 移除預設的 summary 三角形 */
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+        
+        /* 防止 PC 版捲軸造成的版面跳動 */
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* 核心動畫：利用 grid-template-rows 實現高度 0 -> auto 的平滑過渡 */
+        .faq-content {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.3s ease-out;
+        }
+        
+        /* 當 details 擁有 open 屬性，或是我們手動加上 is-open class 時展開 */
+        details[open] .faq-content,
+        details.is-open .faq-content {
+            grid-template-rows: 1fr;
+        }
+
+        .faq-inner {
+            overflow: hidden;
+        }
+
+        /* 箭頭旋轉動畫 */
+        .icon-rotate {
+            transition: transform 0.3s ease;
+        }
+        details[open] .icon-rotate {
+            transform: rotate(45deg); /* 變成 X 或倒轉 */
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-700 bg-ty-bg antialiased flex flex-col min-h-screen overflow-y-scroll">
+
+    <!-- 導航列 -->
+    <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-md shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex-shrink-0 flex items-center group">
+                    <span class="font-bold text-xl text-ty-main tracking-wider group-hover:opacity-80">桃園 Taoyuan</span>
+                    <span class="ml-2 text-xs text-white bg-ty-accent px-2 py-0.5 rounded-full">港澳專區</span>
+                </a>
+                <div class="hidden md:flex space-x-1">
+                    <a href="index.html" class="text-gray-600 hover:text-ty-main hover:bg-ty-light px-3 py-2 rounded-md text-sm font-medium transition">首頁</a>
+                    <a href="taoyuan_transport.html" class="text-gray-600 hover:text-ty-main hover:bg-ty-light px-3 py-2 rounded-md text-sm font-medium transition">交通</a>
+                    <a href="taoyuan_itinerary_detail.html" class="text-gray-600 hover:text-ty-main hover:bg-ty-light px-3 py-2 rounded-md text-sm font-medium transition">行程</a>
+                    <a href="taoyuan_food_souvenir.html" class="text-gray-600 hover:text-ty-main hover:bg-ty-light px-3 py-2 rounded-md text-sm font-medium transition">美食</a>
+                    <a href="taoyuan_accommodation.html" class="text-gray-600 hover:text-ty-main hover:bg-ty-light px-3 py-2 rounded-md text-sm font-medium transition">住宿</a>
+                    <a href="taoyuan_faq.html" class="text-ty-main bg-ty-light px-3 py-2 rounded-md text-sm font-bold transition">FAQ</a>
+                </div>
+                 <div class="md:hidden flex items-center">
+                    <a href="index.html" class="text-xs text-gray-500">↩ 返首頁</a>
+                </div>
+            </div>
+        </div>
+        <div class="md:hidden overflow-x-auto whitespace-nowrap bg-gray-50 border-t border-gray-100 px-4 py-2 scrollbar-hide">
+            <a href="taoyuan_transport.html" class="inline-block px-3 py-1 text-sm text-gray-600 border border-gray-300 rounded-full mr-2 hover:bg-ty-main hover:text-white transition">🚆 交通</a>
+            <a href="taoyuan_itinerary_detail.html" class="inline-block px-3 py-1 text-sm text-gray-600 border border-gray-300 rounded-full mr-2 hover:bg-ty-main hover:text-white transition">📅 行程</a>
+            <a href="taoyuan_food_souvenir.html" class="inline-block px-3 py-1 text-sm text-gray-600 border border-gray-300 rounded-full mr-2 hover:bg-ty-main hover:text-white transition">🍜 美食</a>
+            <a href="taoyuan_accommodation.html" class="inline-block px-3 py-1 text-sm text-gray-600 border border-gray-300 rounded-full mr-2 hover:bg-ty-main hover:text-white transition">🏨 住宿</a>
+            <a href="taoyuan_faq.html" class="inline-block px-3 py-1 text-sm font-bold bg-ty-main text-white border border-transparent rounded-full hover:bg-ty-main hover:text-white transition">❓ FAQ</a>
+        </div>
+    </nav>
+
+    <header class="bg-ty-main text-white pt-36 md:pt-24 pb-12 px-4 text-center">
+        <h1 class="text-3xl font-bold mb-4">第一次嚟桃園必睇</h1>
+        <p class="opacity-90 max-w-xl mx-auto">
+            專為香港、澳門旅客而設，<br>解答關於航班、行李、交通嘅疑難雜症。
+        </p>
+    </header>
+
+    <main class="w-full max-w-3xl mx-auto px-4 py-10 space-y-6">
+        
+        <!-- Group: 航班與行李 -->
+        <div class="bg-blue-50 border-l-4 border-ty-main p-4 rounded-r-lg mb-2">
+            <h3 class="font-bold text-ty-dark">✈️ 航班與行李小貼士 (針對 14:45 回程機)</h3>
+        </div>
+
+        <details class="bg-white rounded-lg shadow-sm group overflow-hidden border border-gray-100">
+            <summary class="cursor-pointer p-6 font-bold text-lg flex justify-between items-center bg-white hover:bg-gray-50 transition select-none">
+                回程機係 14:45，最後一日行李可以放邊？
+                <span class="text-ty-main text-2xl font-bold icon-rotate">+</span>
+            </summary>
+            <!-- 內容包裹層：用於 grid 動畫 -->
+            <div class="faq-content">
+                <div class="faq-inner px-6 pb-6 text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
+                    <p class="mb-2">如果您最後一日打算行 Outlet，行李有兩個地方可以放：</p>
+                    <ol class="list-decimal list-inside space-y-1">
+                        <li><strong>機捷 A18 高鐵桃園站：</strong> 站內有大型 Locker (置物櫃)，可放 29 吋行李箱。</li>
+                        <li><strong>華泰名品城 (Outlet)：</strong> 有旅客服務中心及投幣式置物櫃。</li>
+                    </ol>
+                    <p class="mt-2 text-sm text-gray-500">💡 建議 11:00 前去放，避免 Locker 爆滿，搵唔到位就麻煩。</p>
+                </div>
+            </div>
+        </details>
+
+        <details class="bg-white rounded-lg shadow-sm group overflow-hidden border border-gray-100">
+            <summary class="cursor-pointer p-6 font-bold text-lg flex justify-between items-center bg-white hover:bg-gray-50 transition select-none">
+                14:45 起飛，幾點要到機場？
+                <span class="text-ty-main text-2xl font-bold icon-rotate">+</span>
+            </summary>
+            <div class="faq-content">
+                <div class="faq-inner px-6 pb-6 text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
+                    建議 <strong>12:45 (起飛前 2 小時)</strong> 到達機場櫃檯報到。如果想施施然行免稅店，建議 12:30 好到啦。由機捷 A18 站去機場只需約 15-20 分鐘。
+                </div>
+            </div>
+        </details>
+
+        <!-- Group: 一般問題 -->
+        <div class="bg-gray-100 border-l-4 border-gray-400 p-4 rounded-r-lg mb-2 mt-8">
+            <h3 class="font-bold text-gray-700">❓ 一般常見問題</h3>
+        </div>
+
+        <details class="bg-white rounded-lg shadow-sm group overflow-hidden border border-gray-100">
+            <summary class="cursor-pointer p-6 font-bold text-lg flex justify-between items-center bg-white hover:bg-gray-50 transition select-none">
+                入境需唔需要簽證？
+                <span class="text-ty-main text-2xl font-bold icon-rotate">+</span>
+            </summary>
+            <div class="faq-content">
+                <div class="faq-inner px-6 pb-6 text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
+                    一般情況下，持香港或澳門特區護照旅客，可申請網上入臺證或落地簽證。建議出發前到官方網站確認最新規定。
+                </div>
+            </div>
+        </details>
+
+        <details class="bg-white rounded-lg shadow-sm group overflow-hidden border border-gray-100">
+            <summary class="cursor-pointer p-6 font-bold text-lg flex justify-between items-center bg-white hover:bg-gray-50 transition select-none">
+                去邊度買上網 SIM 卡？
+                <span class="text-ty-main text-2xl font-bold icon-rotate">+</span>
+            </summary>
+            <div class="faq-content">
+                <div class="faq-inner px-6 pb-6 text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
+                    <strong>機場一出閘就有！</strong> 中華電信、台灣大哥大、遠傳都有櫃檯，買張「無限數據 (吃到飽)」嘅卡好平，即插即用。或者出發前係 Klook/KKday 買定都得。
+                </div>
+            </div>
+        </details>
+
+        <details class="bg-white rounded-lg shadow-sm group overflow-hidden border border-gray-100">
+            <summary class="cursor-pointer p-6 font-bold text-lg flex justify-between items-center bg-white hover:bg-gray-50 transition select-none">
+                唔揸車得唔得？一定要租車嗎？
+                <span class="text-ty-main text-2xl font-bold icon-rotate">+</span>
+            </summary>
+            <div class="faq-content">
+                <div class="faq-inner px-6 pb-6 text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
+                    <strong>完全唔需要。</strong>桃園交通好方便，有捷運、巴士、觀光巴士，非常適合自由行。
+                    <a href="taoyuan_transport.html" class="text-ty-main underline ml-2">睇交通詳情 →</a>
+                </div>
+            </div>
+        </details>
+        
+        <details class="bg-white rounded-lg shadow-sm group overflow-hidden border border-gray-100">
+            <summary class="cursor-pointer p-6 font-bold text-lg flex justify-between items-center bg-white hover:bg-gray-50 transition select-none">
+                收唔收港幣/澳門幣？
+                <span class="text-ty-main text-2xl font-bold icon-rotate">+</span>
+            </summary>
+            <div class="faq-content">
+                <div class="faq-inner px-6 pb-6 text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
+                    唔收，一定要用台幣。大部分地方收信用卡 (Visa/Master)，但夜市同小店通常只收現金，建議係機場換定少少錢。
+                </div>
+            </div>
+        </details>
+
+        <details class="bg-white rounded-lg shadow-sm group overflow-hidden border border-gray-100">
+            <summary class="cursor-pointer p-6 font-bold text-lg flex justify-between items-center bg-white hover:bg-gray-50 transition select-none">
+                緊急電話係幾多？
+                <span class="text-ty-main text-2xl font-bold icon-rotate">+</span>
+            </summary>
+            <div class="faq-content">
+                <div class="faq-inner px-6 pb-6 text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
+                    報警請打 <strong>110</strong>，叫救護車/火警請打 <strong>119</strong>。
+                </div>
+            </div>
+        </details>
+
+    </main>
+
+    <footer class="bg-gray-800 text-gray-500 py-6 text-center text-xs mt-auto">
+        &copy; 2024 Taoyuan Tourism.
+    </footer>
+
+    <!-- Smooth Accordion Animation Script -->
+    <script>
+        class Accordion {
+            constructor(el) {
+                this.el = el;
+                this.summary = el.querySelector('summary');
+                this.content = el.querySelector('.faq-content');
+                
+                this.animation = null;
+                this.isClosing = false;
+                this.isExpanding = false;
+                this.summary.addEventListener('click', (e) => this.onClick(e));
+            }
+
+            onClick(e) {
+                e.preventDefault();
+                this.el.style.overflow = 'hidden';
+                if (this.isClosing || !this.el.open) {
+                    this.open();
+                } else if (this.isExpanding || this.el.open) {
+                    this.shrink();
+                }
+            }
+
+            shrink() {
+                this.isClosing = true;
+                const startHeight = `${this.el.offsetHeight}px`;
+                const endHeight = `${this.summary.offsetHeight}px`;
+
+                if (this.animation) {
+                    this.animation.cancel();
+                }
+
+                // 這裡我們只處理 details 的高度動畫，內容的 grid-template-rows 會由 CSS 自動處理
+                // 但為了更順暢，我們手動控制 open 屬性的移除
+                this.el.classList.remove('is-open'); // 觸發 CSS grid 收合
+
+                // 設定一個 timeout 等待 CSS transition 結束
+                setTimeout(() => {
+                    this.el.open = false;
+                    this.isClosing = false;
+                }, 300); // 300ms 與 CSS transition 時間一致
+            }
+
+            open() {
+                this.el.style.height = `${this.el.offsetHeight}px`;
+                this.el.open = true;
+                window.requestAnimationFrame(() => this.expand());
+            }
+
+            expand() {
+                this.isExpanding = true;
+                // 加入 class 觸發 CSS grid 展開
+                this.el.classList.add('is-open');
+                
+                setTimeout(() => {
+                    this.isExpanding = false;
+                    this.el.style.height = '';
+                    this.el.style.overflow = '';
+                }, 300);
+            }
+        }
+
+        document.querySelectorAll('details').forEach((el) => {
+            new Accordion(el);
+        });
+    </script>
+</body>
+</html>
